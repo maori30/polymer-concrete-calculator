@@ -1,0 +1,210 @@
+/* עיצוב Apple Glass מותאם במיוחד לאייפון פרו מקס (iPhone Pro Max)
+ * טיפוגרפיה גדולה, קריאה, ללא בחירה מהירה, שטח מגע מרווח ועיצוב קריסטלי
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Rubik:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --apple-bg: #f8fafc;
+  --apple-glass-bg: rgba(255, 255, 255, 0.82);
+  --apple-glass-bg-subtle: rgba(255, 255, 255, 0.65);
+  --apple-glass-border: rgba(255, 255, 255, 0.9);
+  --apple-glass-border-light: #ffffff;
+  --apple-glass-shadow: 0 16px 40px -8px rgba(15, 23, 42, 0.06), 0 4px 16px -2px rgba(0, 0, 0, 0.02);
+  --apple-glass-inset: inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1);
+  --apple-pill-bg: rgba(255, 255, 255, 0.9);
+}
+
+.dark {
+  --apple-bg: #0b0f17;
+  --apple-glass-bg: rgba(18, 26, 43, 0.82);
+  --apple-glass-bg-subtle: rgba(18, 26, 43, 0.65);
+  --apple-glass-border: rgba(255, 255, 255, 0.12);
+  --apple-glass-border-light: rgba(255, 255, 255, 0.25);
+  --apple-glass-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+  --apple-glass-inset: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+  --apple-pill-bg: rgba(30, 41, 59, 0.85);
+}
+
+html {
+  font-size: 17px; /* בסיס טיפוגרפי גדול וקריא לפי תקן iOS Pro Max */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Heebo', system-ui, sans-serif;
+  background-color: var(--apple-bg);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+.font-rubik {
+  font-family: 'Rubik', -apple-system, sans-serif;
+}
+
+/* רקע בהיר מואר - Apple Luminous Gradient */
+.apple-mesh-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: 
+    radial-gradient(at 10% 10%, rgba(204, 251, 241, 0.75) 0px, transparent 50%),
+    radial-gradient(at 90% 15%, rgba(224, 242, 254, 0.85) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(240, 253, 250, 0.95) 0px, transparent 65%),
+    radial-gradient(at 85% 85%, rgba(254, 243, 199, 0.5) 0px, transparent 50%),
+    radial-gradient(at 15% 90%, rgba(241, 245, 249, 0.85) 0px, transparent 50%);
+}
+
+.dark .apple-mesh-bg {
+  background: 
+    radial-gradient(at 15% 15%, rgba(13, 148, 136, 0.22) 0px, transparent 50%),
+    radial-gradient(at 85% 20%, rgba(2, 132, 199, 0.18) 0px, transparent 50%),
+    radial-gradient(at 50% 85%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),
+    #090d16;
+}
+
+/* כרטיסי זכוכית Apple Glass */
+.apple-glass {
+  background: var(--apple-glass-bg);
+  backdrop-filter: blur(36px) saturate(210%);
+  -webkit-backdrop-filter: blur(36px) saturate(210%);
+  border: 1.5px solid var(--apple-glass-border);
+  border-top: 2px solid var(--apple-glass-border-light);
+  box-shadow: var(--apple-glass-shadow), var(--apple-glass-inset);
+  border-radius: 1.75rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-glass-subtle {
+  background: var(--apple-glass-bg-subtle);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--apple-glass-border);
+  box-shadow: var(--apple-glass-inset);
+  border-radius: 1.25rem;
+}
+
+.apple-glass-interactive {
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-glass-interactive:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 42px -10px rgba(13, 148, 136, 0.18), var(--apple-glass-inset);
+}
+
+.dark .apple-glass-interactive:hover {
+  background: rgba(30, 41, 59, 0.9);
+}
+
+.apple-glass-interactive:active {
+  transform: scale(0.985);
+}
+
+/* שדות קלט Apple גדולים ונוחים */
+.apple-input {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(226, 232, 240, 0.9);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+  border-radius: 1.25rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .apple-input {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(51, 65, 85, 0.8);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.apple-input:focus {
+  border-color: #0d9488;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.2);
+}
+
+/* Apple Segmented Control */
+.apple-segmented-container {
+  background: rgba(241, 245, 249, 0.9);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 1.25rem;
+  padding: 4px;
+}
+
+.dark .apple-segmented-container {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.apple-segmented-btn {
+  border-radius: 0.95rem;
+  font-weight: 700;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-segmented-btn.active {
+  background: #ffffff;
+  color: #0f766e;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.dark .apple-segmented-btn.active {
+  background: #0d9488;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.4);
+}
+
+/* כפתור ראשי Apple Glass גדול */
+.apple-btn-primary {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px -4px rgba(13, 148, 136, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  border-radius: 1.25rem;
+  font-weight: 800;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 54px;
+}
+
+.apple-btn-primary:active {
+  transform: scale(0.975);
+}
+
+/* כרטיס תוצאות שקילה */
+.apple-metric-card {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-top: 2.5px solid #ffffff;
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.04), inset 0 1.5px 1.5px rgba(255, 255, 255, 1);
+  border-radius: 1.5rem;
+}
+
+.dark .apple-metric-card {
+  background: rgba(30, 41, 59, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1.5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+/* מותאם לאייפון פרו מקס (מגע של 48px לפחות לכל אלמנט) */
+button, input, select {
+  touch-action: manipulation;
+  min-height: 48px;
+}
+
+:focus-visible {
+  outline: 3px solid #0d9488;
+  outline-offset: 2px;
+}
+
+@media print {
+  .apple-mesh-bg, .no-print {
+    display: none !important;
+  }
+}
