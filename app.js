@@ -497,6 +497,14 @@ function updateUI() {
 
   document.getElementById('res-water-measured').innerText = `${res.moldWaterWeight} גרם מים (${res.moldWaterWeight} סמ"ק)`;
 
+  // Mobile quick summary bar
+  const barPowder = document.getElementById('bar-powder');
+  const barLiquid = document.getElementById('bar-liquid');
+  const barTotal = document.getElementById('bar-total');
+  if (barPowder) barPowder.innerText = `${res.totalPowderWhole}ג׳`;
+  if (barLiquid) barLiquid.innerText = `${res.totalLiquidWhole}ג׳`;
+  if (barTotal) barTotal.innerText = `סה״כ ${res.totalMixAllWhole}ג׳`;
+
   const recBox = document.getElementById('grayish-buy-box');
   if (recBox && res.recommendation) {
     const rec = res.recommendation;

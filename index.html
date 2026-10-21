@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -321,7 +321,20 @@
     </div>
   </main>
 
-  <footer class="relative z-10 mt-12 py-6 border-t border-slate-200/60 dark:border-slate-800 text-center text-sm text-slate-400 no-print">
+  <!-- Mobile Quick Summary Bar (Sticky on iPhone Pro Max) -->
+  <div class="lg:hidden apple-mobile-bar apple-glass p-3 rounded-2xl flex items-center justify-between no-print">
+    <div class="flex items-center gap-2">
+      <div class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></div>
+      <div class="text-xs font-bold leading-tight">
+        <span class="text-slate-400">אבקה:</span> <strong id="bar-powder" class="text-teal-400 font-rubik font-black text-sm">477ג׳</strong>
+        <span class="mx-1 text-slate-600">|</span>
+        <span class="text-slate-400">מים:</span> <strong id="bar-liquid" class="text-amber-400 font-rubik font-black text-sm">159ג׳</strong>
+      </div>
+    </div>
+    <span id="bar-total" class="text-xs font-black text-slate-300 font-rubik bg-slate-800 px-2.5 py-1 rounded-lg">סה״כ 636ג׳</span>
+  </div>
+
+  <footer class="relative z-10 mt-12 py-6 border-t border-slate-200/60 dark:border-slate-800 text-center text-sm text-slate-400 pb-20 lg:pb-6 no-print">
     <p>מחשבון בטון פולימרי • Apple Glass מותאם לאייפון פרו מקס • מנוע GRAYISH</p>
   </footer>
 
