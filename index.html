@@ -31,7 +31,7 @@
 
   <style>
     :root {
-      --bg-dark: #06090f;
+      --bg-dark: #0f1a2e;
     }
 
     html {
@@ -42,7 +42,7 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Heebo', system-ui, sans-serif;
       background-color: var(--bg-dark);
-      color: #f1f5f9;
+      color: #f8fafc;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
@@ -55,86 +55,86 @@
       font-family: 'Rubik', -apple-system, sans-serif;
     }
 
-    /* Ambient Liquid Mesh - Softer, smoother, pleasant to the eye */
+    /* Ambient Liquid Mesh - Pleasant, softer, luminous twilight atmosphere */
     .liquid-mesh-bg {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
       background: 
-        radial-gradient(ellipse 65% 50% at 20% 12%, rgba(20, 184, 166, 0.28) 0%, transparent 65%),
-        radial-gradient(ellipse 60% 45% at 85% 22%, rgba(56, 189, 248, 0.22) 0%, transparent 65%),
-        radial-gradient(circle at 50% 55%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
-        radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.12) 0%, transparent 55%),
-        radial-gradient(circle at 12% 88%, rgba(16, 185, 129, 0.15) 0%, transparent 55%),
-        #06090f;
+        radial-gradient(ellipse 70% 55% at 15% 10%, rgba(45, 212, 191, 0.35) 0%, transparent 65%),
+        radial-gradient(ellipse 65% 50% at 85% 18%, rgba(56, 189, 248, 0.32) 0%, transparent 65%),
+        radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.2) 0%, transparent 60%),
+        radial-gradient(circle at 85% 82%, rgba(251, 191, 36, 0.18) 0%, transparent 55%),
+        radial-gradient(circle at 12% 85%, rgba(20, 184, 166, 0.25) 0%, transparent 60%),
+        linear-gradient(180deg, #10192b 0%, #17243c 50%, #0f182a 100%);
     }
 
     /* Primary Liquid Glass Surface */
     .liquid-glass {
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(13, 20, 36, 0.72);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(23, 37, 65, 0.68);
       backdrop-filter: blur(48px) saturate(220%);
       -webkit-backdrop-filter: blur(48px) saturate(220%);
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-top: 1.5px solid rgba(255, 255, 255, 0.35);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.45);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 
-        0 24px 55px -12px rgba(0, 0, 0, 0.65),
-        0 8px 20px -4px rgba(0, 0, 0, 0.35),
-        inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.22),
-        inset 0 -1px 2px 0 rgba(0, 0, 0, 0.35);
+        0 24px 55px -12px rgba(2, 6, 23, 0.5),
+        0 8px 20px -4px rgba(2, 6, 23, 0.3),
+        inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -1px 2px 0 rgba(0, 0, 0, 0.3);
       border-radius: 2rem;
     }
 
     /* Secondary Liquid Glass Surface (Cards / Rows) */
     .liquid-glass-subtle {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%), rgba(19, 29, 52, 0.62);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(28, 45, 76, 0.58);
       backdrop-filter: blur(32px) saturate(200%);
       -webkit-backdrop-filter: blur(32px) saturate(200%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-top: 1.5px solid rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.3);
       box-shadow: 
-        0 8px 24px -4px rgba(0, 0, 0, 0.3),
-        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.16);
+        0 8px 24px -4px rgba(2, 6, 23, 0.25),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.2);
       border-radius: 1.4rem;
     }
 
     /* Liquid Metric Pod - Mint / Teal */
     .liquid-pod-teal {
-      background: linear-gradient(135deg, rgba(20, 184, 166, 0.18) 0%, rgba(6, 182, 212, 0.06) 100%), rgba(13, 26, 42, 0.88);
+      background: linear-gradient(135deg, rgba(20, 184, 166, 0.22) 0%, rgba(6, 182, 212, 0.08) 100%), rgba(16, 34, 56, 0.82);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
-      border: 1px solid rgba(45, 212, 191, 0.32);
-      border-top: 1.5px solid rgba(94, 234, 212, 0.55);
+      border: 1px solid rgba(45, 212, 191, 0.38);
+      border-top: 1.5px solid rgba(94, 234, 212, 0.65);
       box-shadow: 
         0 12px 28px -6px rgba(13, 148, 136, 0.25),
-        inset 0 1.5px 2px rgba(255, 255, 255, 0.28);
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.32);
       border-radius: 1.25rem;
     }
 
     /* Liquid Metric Pod - Amber */
     .liquid-pod-amber {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(234, 88, 12, 0.06) 100%), rgba(30, 23, 28, 0.88);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(234, 88, 12, 0.08) 100%), rgba(38, 30, 42, 0.82);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
-      border: 1px solid rgba(251, 191, 36, 0.32);
-      border-top: 1.5px solid rgba(253, 224, 71, 0.55);
+      border: 1px solid rgba(251, 191, 36, 0.38);
+      border-top: 1.5px solid rgba(253, 224, 71, 0.65);
       box-shadow: 
         0 12px 28px -6px rgba(245, 158, 11, 0.22),
-        inset 0 1.5px 2px rgba(255, 255, 255, 0.28);
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.32);
       border-radius: 1.25rem;
     }
 
     /* Liquid Glass Input */
     .liquid-input {
-      background: rgba(9, 15, 28, 0.82);
+      background: rgba(14, 23, 42, 0.75);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border: 1.5px solid rgba(255, 255, 255, 0.12);
-      border-top: 1.5px solid rgba(255, 255, 255, 0.22);
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.3);
       box-shadow: 
-        inset 0 2px 6px rgba(0, 0, 0, 0.5),
-        0 4px 14px rgba(0, 0, 0, 0.2);
+        inset 0 2px 6px rgba(0, 0, 0, 0.35),
+        0 4px 14px rgba(0, 0, 0, 0.15);
       border-radius: 1.25rem;
       color: #ffffff;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -143,22 +143,22 @@
     .liquid-input:focus {
       border-color: #2dd4bf;
       box-shadow: 
-        0 0 0 4px rgba(45, 212, 191, 0.22),
-        0 10px 25px -4px rgba(45, 212, 191, 0.28),
-        inset 0 2px 4px rgba(0, 0, 0, 0.4);
+        0 0 0 4px rgba(45, 212, 191, 0.25),
+        0 10px 25px -4px rgba(45, 212, 191, 0.3),
+        inset 0 2px 4px rgba(0, 0, 0, 0.3);
       outline: none;
     }
 
     /* Liquid Glass Dropdown */
     .liquid-select {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(11, 18, 33, 0.88);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(18, 30, 54, 0.85);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
-      border: 1.5px solid rgba(255, 255, 255, 0.13);
-      border-top: 1.5px solid rgba(255, 255, 255, 0.28);
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.35);
       box-shadow: 
-        0 6px 18px rgba(0, 0, 0, 0.35),
-        inset 0 1px 1.5px rgba(255, 255, 255, 0.2);
+        0 6px 18px rgba(0, 0, 0, 0.25),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.25);
       border-radius: 1.25rem;
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%232dd4bf' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
       background-position: left 1.1rem center;
@@ -173,7 +173,7 @@
 
     .liquid-select:focus {
       border-color: #2dd4bf;
-      box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.22), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.3);
       outline: none;
     }
 
@@ -306,7 +306,7 @@
       </div>
 
       <!-- 3. מתכון שקילה מוכן לעבודה (כרטיס זכוכית נוזלית מואר) -->
-      <div class="p-4 sm:p-6 rounded-3xl bg-gradient-to-br from-teal-500/15 via-slate-900/80 to-slate-900/90 border border-teal-400/40 shadow-2xl space-y-4 relative overflow-hidden backdrop-blur-2xl">
+      <div class="p-4 sm:p-6 rounded-3xl bg-gradient-to-br from-teal-500/20 via-slate-800/70 to-slate-800/85 border border-teal-300/45 shadow-2xl space-y-4 relative overflow-hidden backdrop-blur-2xl">
         
         <!-- Subtle Specular Reflection Line -->
         <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-300/40 to-transparent"></div>
