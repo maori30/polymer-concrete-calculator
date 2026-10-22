@@ -584,44 +584,6 @@
       NIKA: { label: "NIKA A1 (דו-רכיבי)", shortRatio: "2.6:1", x: 0.56, y: 2.6, basis: "liquid", liquid: "נוזל אקרילי A1", packs: [[1.5, 120], [3.5, 230], [7, 430], [14, 820]], tips: ["שימו לב: משתמשים אך ורק בנוזל האקרילי המצורף, אסור להוסיף מים!", "מומלץ לעבוד עם מברשת בשכבה ראשונה להוצאת בועות מושלמת."] }
     };
 
-    // תבניות ברירת מחדל מובנות באתר (זמינות תמיד לכל משתמש ומכשיר, כולל סטים)
-    const DEFAULT_SAVED_MOLDS = [
-      {
-        id: 'def_1',
-        name: "סט כלי נר + מכסה תואם",
-        matKey: "KAMIN",
-        items: [
-          { name: "כלי נר (בסיס)", water: 175 },
-          { name: "מכסה לכלי נר", water: 65 }
-        ]
-      },
-      {
-        id: 'def_2',
-        name: "סט שולחני: מגש אובלי + מעמד כוסות",
-        matKey: "WHITE",
-        items: [
-          { name: "מגש אובלי קלאסי (18 ס״מ)", water: 265 },
-          { name: "תחתית לכוס (Coaster)", water: 110 }
-        ]
-      },
-      {
-        id: 'def_3',
-        name: "אגרטל מיני גאומטרי",
-        matKey: "SAHARA",
-        items: [
-          { name: "אגרטל מיני", water: 220 }
-        ]
-      },
-      {
-        id: 'def_4',
-        name: "מעמד עציץ עגול מחוזק",
-        matKey: "FLEX",
-        items: [
-          { name: "מעמד עציץ", water: 310 }
-        ]
-      }
-    ];
-
     // נרמול תבנית (תמיכה מלאה לאחור בתבניות ישנות עם שדה water יחיד או סטים של כמה תבניות)
     function normalizeSavedMold(m) {
       if (!m.items || !Array.isArray(m.items) || m.items.length === 0) {
@@ -645,7 +607,7 @@
       };
     }
 
-    // מאגר תבניות שמורות (נטען מ-localStorage ומסונכרן עם תבניות ברירת המחדל של האתר)
+    // מאגר תבניות שמורות (נטען מ-localStorage - רק מה שהמשתמש שומר, ללא תבניות מובנות)
     let savedMolds = loadSavedMolds();
 
     function loadSavedMolds() {
@@ -653,14 +615,16 @@
         const stored = localStorage.getItem('grayish_saved_molds_v2');
         if (stored) {
           const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            return parsed.map(normalizeSavedMold);
+          if (Array.isArray(parsed)) {
+            // סינון של כל תבנית מובנית/דוגמה קודמת כדי שיופיעו אך ורק תבניות שהמשתמש שמר
+            const userOnly = parsed.filter(m => m && !String(m.id).startsWith('def_'));
+            return userOnly.map(normalizeSavedMold);
           }
         }
       } catch (e) {
         console.warn('Storage read error', e);
       }
-      return DEFAULT_SAVED_MOLDS.map(normalizeSavedMold);
+      return [];
     }
 
     function persistSavedMolds() {
@@ -949,10 +913,13 @@
 
       if (savedMolds.length === 0) {
         container.innerHTML = `
-          <div class="p-6 text-center text-slate-400 text-xs sm:text-sm">
-            אין תבניות שמורות כרגע. השתמש בטופס שלמעלה כדי להוסיף תבנית או סט ראשון!
+          <div class="p-6 text-center text-slate-400 space-y-2">
+            <i data-lucide="layers" class="w-8 h-8 mx-auto text-slate-500 opacity-60"></i>
+            <p class="text-xs sm:text-sm font-bold text-slate-300">עדיין לא נשמרו תבניות או סטים.</p>
+            <p class="text-xs text-slate-500">השתמש בטופס שלמעלה כדי לשמור את התבניות האישיות שלך!</p>
           </div>
         `;
+        if (window.lucide) lucide.createIcons();
         return;
       }
 
@@ -1344,6 +1311,7 @@ ${moldsText}
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      persistSavedMolds();
       updateSavedCounts();
       renderMoldsInputs();
       renderNewMoldPartsInputs();
