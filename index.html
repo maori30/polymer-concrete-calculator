@@ -441,32 +441,32 @@
     <!-- ═════════════════════════════════════════════════════════════ -->
     <section id="view-saved" class="hidden space-y-4">
       
-      <!-- טופס הוספת תבנית חדשה לשמורים -->
+      <!-- טופס הוספת תבנית או סט תבניות לשמורים -->
       <div class="liquid-glass p-5 sm:p-7 space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-white/10">
           <div class="flex items-center gap-2 text-white font-black text-lg">
             <i data-lucide="plus-circle" class="w-5 h-5 text-teal-400"></i>
-            <span>הוספת תבנית חדשה לשמורים</span>
+            <span>הוספת תבנית או סט תבניות</span>
           </div>
           <span class="text-xs text-teal-300 font-bold bg-teal-500/10 px-2.5 py-1 rounded-lg border border-teal-400/30">
-            שמירה קבועה
+            תבנית יחידה או סט
           </span>
         </div>
 
         <!-- שדות הטופס -->
         <div class="space-y-3.5">
-          <!-- 1. תיאור / שם התבנית -->
+          <!-- 1. תיאור / שם התבנית או הסט -->
           <div>
             <label class="block text-xs sm:text-sm font-black text-slate-200 mb-1">
-              תיאור התבנית (שם לזיהוי מהיר):
+              שם התבנית או הסט (לזיהוי מהיר):
             </label>
-            <input type="text" id="new-mold-desc" placeholder="למשל: מגש אובלי 18 ס״מ, קערית נר עגולה..." class="liquid-input w-full p-3.5 text-sm sm:text-base font-bold text-white placeholder:text-slate-500">
+            <input type="text" id="new-mold-desc" placeholder="למשל: סט כלי נר ומכסה, מגש אובלי, מעמד עציץ..." class="liquid-input w-full p-3.5 text-sm sm:text-base font-bold text-white placeholder:text-slate-500">
           </div>
 
           <!-- 2. סוג חומר מומלץ לתבנית -->
           <div>
             <label class="block text-xs sm:text-sm font-black text-slate-200 mb-1">
-              סוג חומר גרייש מועדף לתבנית זו:
+              סוג חומר גרייש מועדף:
             </label>
             <select id="new-mold-mat" onchange="updateNewMoldPreview()" class="liquid-select w-full p-3.5 text-sm sm:text-base font-bold cursor-pointer">
               <option value="WHITE" selected>שלג פולימרי פרו (Snow Pro) — יחס 3:1</option>
@@ -481,41 +481,36 @@
             </select>
           </div>
 
-          <!-- 3. כמות מים שנשקלה -->
-          <div>
-            <label class="block text-xs sm:text-sm font-black text-slate-200 mb-1">
-              כמות המים שנשקלה לתבנית (גרם מים = סמ״ק):
-            </label>
-            <div class="relative w-full">
-              <input type="number" id="new-mold-water" placeholder="הזן משקל מים (למשל: 265)" min="1" max="10000" inputmode="numeric" oninput="updateNewMoldPreview()" class="liquid-input w-full px-4 py-3 text-xl sm:text-2xl font-black font-rubik text-teal-300 text-left pl-24 placeholder:text-slate-500 placeholder:text-sm" dir="ltr">
-              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs sm:text-sm font-bold text-slate-400 pointer-events-none">
-                גרם מים
-              </span>
+          <!-- 3. חלקי התבנית / הסט (ניתן להוסיף 2 תבניות ומעלה כסט) -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs sm:text-sm font-black text-slate-200">
+                חלקי התבנית / הסט (משקל מים מדוד לכל חלק):
+              </label>
+              <span class="text-[11px] text-teal-300/80 font-bold">תמיכה ב-2 תבניות כסט</span>
             </div>
+
+            <!-- רשימת חלקי הסט הדינמית -->
+            <div id="new-mold-parts-container" class="space-y-2.5">
+              <!-- נוצר דרך JS -->
+            </div>
+
+            <!-- כפתור הוספת חלק נוסף לסט -->
+            <button type="button" onclick="addNewMoldPart()" class="w-full py-2.5 px-3 rounded-xl bg-teal-500/10 hover:bg-teal-500/20 border border-dashed border-teal-400/40 text-teal-300 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition active:scale-98">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>+ הוסף תבנית נוספת לסט (למשל מכסה / חלק 2)</span>
+            </button>
           </div>
 
-          <!-- תצוגה מקדימה חיה של חישוב התבנית -->
+          <!-- תצוגה מקדימה חיה של חישוב התבנית / הסט -->
           <div id="new-mold-calc-preview" class="liquid-glass-subtle p-3.5 space-y-2 border border-teal-400/30">
-            <div class="flex items-center justify-between text-xs font-black text-slate-300">
-              <span>חישוב כמויות לתבנית זו:</span>
-              <span id="preview-total-mix" class="text-teal-300 font-rubik font-bold">0 גרם סה״כ</span>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-right text-xs">
-              <div class="p-2 rounded-xl bg-teal-500/10 border border-teal-400/20">
-                <span class="text-slate-400 block">אבקה נדרשת</span>
-                <strong id="preview-powder" class="text-sm font-black text-teal-200 font-rubik">0 גרם</strong>
-              </div>
-              <div class="p-2 rounded-xl bg-amber-500/10 border border-amber-400/20">
-                <span id="preview-lbl-liquid" class="text-slate-400 block">מים</span>
-                <strong id="preview-liquid" class="text-sm font-black text-amber-200 font-rubik">0 גרם</strong>
-              </div>
-            </div>
+            <!-- נוצר דרך JS -->
           </div>
 
           <!-- כפתור שמירה -->
           <button type="button" onclick="saveNewMold()" class="liquid-btn-primary w-full py-3.5 px-4 font-black text-base flex items-center justify-center gap-2 transition shadow-lg">
             <i data-lucide="bookmark-plus" class="w-5 h-5"></i>
-            <span>שמור תבנית זו באתר</span>
+            <span id="btn-save-mold-label">שמור תבנית זו באתר</span>
           </button>
         </div>
       </div>
@@ -589,13 +584,66 @@
       NIKA: { label: "NIKA A1 (דו-רכיבי)", shortRatio: "2.6:1", x: 0.56, y: 2.6, basis: "liquid", liquid: "נוזל אקרילי A1", packs: [[1.5, 120], [3.5, 230], [7, 430], [14, 820]], tips: ["שימו לב: משתמשים אך ורק בנוזל האקרילי המצורף, אסור להוסיף מים!", "מומלץ לעבוד עם מברשת בשכבה ראשונה להוצאת בועות מושלמת."] }
     };
 
-    // תבניות ברירת מחדל מובנות באתר (זמינות תמיד לכל משתמש ומכשיר)
+    // תבניות ברירת מחדל מובנות באתר (זמינות תמיד לכל משתמש ומכשיר, כולל סטים)
     const DEFAULT_SAVED_MOLDS = [
-      { id: 'def_1', name: "מגש אובלי קלאסי (18 ס״מ)", matKey: "WHITE", water: 265 },
-      { id: 'def_2', name: "קערית נר עגולה (בינונית)", matKey: "KAMIN", water: 180 },
-      { id: 'def_3', name: "תחתית לכוס עגולה (10 ס״מ)", matKey: "FLEX", water: 110 },
-      { id: 'def_4', name: "אגרטל מיני גאומטרי", matKey: "SAHARA", water: 220 }
+      {
+        id: 'def_1',
+        name: "סט כלי נר + מכסה תואם",
+        matKey: "KAMIN",
+        items: [
+          { name: "כלי נר (בסיס)", water: 175 },
+          { name: "מכסה לכלי נר", water: 65 }
+        ]
+      },
+      {
+        id: 'def_2',
+        name: "סט שולחני: מגש אובלי + מעמד כוסות",
+        matKey: "WHITE",
+        items: [
+          { name: "מגש אובלי קלאסי (18 ס״מ)", water: 265 },
+          { name: "תחתית לכוס (Coaster)", water: 110 }
+        ]
+      },
+      {
+        id: 'def_3',
+        name: "אגרטל מיני גאומטרי",
+        matKey: "SAHARA",
+        items: [
+          { name: "אגרטל מיני", water: 220 }
+        ]
+      },
+      {
+        id: 'def_4',
+        name: "מעמד עציץ עגול מחוזק",
+        matKey: "FLEX",
+        items: [
+          { name: "מעמד עציץ", water: 310 }
+        ]
+      }
     ];
+
+    // נרמול תבנית (תמיכה מלאה לאחור בתבניות ישנות עם שדה water יחיד או סטים של כמה תבניות)
+    function normalizeSavedMold(m) {
+      if (!m.items || !Array.isArray(m.items) || m.items.length === 0) {
+        return {
+          id: m.id || 'mold_' + Date.now(),
+          name: m.name || 'תבנית שמורה',
+          matKey: m.matKey || 'WHITE',
+          items: [
+            { name: m.name || 'תבנית 1', water: parseFloat(m.water) || 0 }
+          ]
+        };
+      }
+      return {
+        id: m.id,
+        name: m.name,
+        matKey: m.matKey || 'WHITE',
+        items: m.items.map((it, idx) => ({
+          name: it.name || `חלק ${idx + 1}`,
+          water: parseFloat(it.water) || 0
+        }))
+      };
+    }
 
     // מאגר תבניות שמורות (נטען מ-localStorage ומסונכרן עם תבניות ברירת המחדל של האתר)
     let savedMolds = loadSavedMolds();
@@ -605,12 +653,14 @@
         const stored = localStorage.getItem('grayish_saved_molds_v2');
         if (stored) {
           const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed.map(normalizeSavedMold);
+          }
         }
       } catch (e) {
         console.warn('Storage read error', e);
       }
-      return [...DEFAULT_SAVED_MOLDS];
+      return DEFAULT_SAVED_MOLDS.map(normalizeSavedMold);
     }
 
     function persistSavedMolds() {
@@ -625,7 +675,7 @@
     function updateSavedCounts() {
       const count = savedMolds.length;
       document.getElementById('nav-saved-count').innerText = count;
-      document.getElementById('saved-list-count').innerText = `${count} תבניות`;
+      document.getElementById('saved-list-count').innerText = `${count} תבניות וסטים`;
     }
 
     // רשימת התבניות הפעילה כרגע במחשבון (מתחילה ריקה)
@@ -643,6 +693,7 @@
       document.getElementById('view-saved').classList.toggle('hidden', isCalc);
 
       if (!isCalc) {
+        renderNewMoldPartsInputs();
         renderSavedMoldsList();
         updateNewMoldPreview();
       } else {
@@ -651,7 +702,7 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // ─── ניהול תבניות שמורות ───
+    // ─── חישובי עזר לתבניות וסטים ───
 
     function calcMoldSingle(waterNum, matKey) {
       const mat = MATERIALS[matKey] || MATERIALS.WHITE;
@@ -675,53 +726,214 @@
       };
     }
 
-    function updateNewMoldPreview() {
-      const wVal = document.getElementById('new-mold-water').value;
-      const mKey = document.getElementById('new-mold-mat').value;
-      const c = calcMoldSingle(wVal, mKey);
+    function calcMoldGroup(items, matKey) {
+      const mat = MATERIALS[matKey] || MATERIALS.WHITE;
+      let totalWater = 0;
+      let totalPowder = 0;
+      let totalLiquid = 0;
 
-      document.getElementById('preview-total-mix').innerText = `${c.total} גרם סה״כ`;
-      document.getElementById('preview-powder').innerText = `${c.powder} גרם`;
-      document.getElementById('preview-liquid').innerText = `${c.liquid} גרם`;
-      document.getElementById('preview-lbl-liquid').innerText = c.mat.liquid;
+      const calculatedItems = (items || []).map((it, idx) => {
+        const c = calcMoldSingle(it.water, matKey);
+        totalWater += c.water;
+        totalPowder += c.powder;
+        totalLiquid += c.liquid;
+        return {
+          name: it.name || `תבנית ${idx + 1}`,
+          water: c.water,
+          powder: c.powder,
+          liquid: c.liquid,
+          total: c.total
+        };
+      });
+
+      return {
+        mat,
+        items: calculatedItems,
+        totalWater,
+        totalPowder,
+        totalLiquid,
+        totalMix: totalPowder + totalLiquid
+      };
+    }
+
+    // ─── טופס הוספת תבנית / סט תבניות חדש ───
+
+    let newMoldParts = [
+      { name: "תבנית ראשית", water: "" }
+    ];
+
+    function renderNewMoldPartsInputs() {
+      const container = document.getElementById('new-mold-parts-container');
+      if (!container) return;
+
+      container.innerHTML = newMoldParts.map((part, idx) => `
+        <div class="liquid-glass-subtle p-3 space-y-2 border border-white/10">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-teal-300 font-rubik">
+              ${newMoldParts.length > 1 ? `תבנית ${idx + 1} בסט:` : 'משקל מים שנשקלו לתבנית:'}
+            </span>
+            ${newMoldParts.length > 1 ? `
+              <button type="button" onclick="removeNewMoldPart(${idx})" class="text-rose-400 hover:text-rose-300 text-xs font-bold flex items-center gap-1 transition active:scale-95">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <span>הסר</span>
+              </button>
+            ` : ''}
+          </div>
+
+          <div class="grid grid-cols-1 ${newMoldParts.length > 1 ? 'sm:grid-cols-2' : ''} gap-2">
+            ${newMoldParts.length > 1 ? `
+              <div>
+                <input type="text" 
+                       value="${part.name || ''}" 
+                       placeholder="שם החלק בסט (למשל: בסיס, מכסה...)" 
+                       oninput="updateNewMoldPartName(${idx}, this.value)" 
+                       class="liquid-input w-full p-2.5 text-xs sm:text-sm font-bold text-white placeholder:text-slate-500">
+              </div>
+            ` : ''}
+            <div class="relative w-full">
+              <input type="number" 
+                     value="${part.water !== '' ? part.water : ''}" 
+                     placeholder="הזן משקל מים (למשל: 180)" 
+                     min="1" 
+                     max="10000" 
+                     inputmode="numeric" 
+                     oninput="updateNewMoldPartWater(${idx}, this.value)" 
+                     class="liquid-input w-full px-3 py-2.5 text-lg sm:text-xl font-black font-rubik text-teal-300 text-left pl-20 placeholder:text-slate-500 placeholder:text-xs" 
+                     dir="ltr">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">
+                גרם מים
+              </span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      const btnLabel = document.getElementById('btn-save-mold-label');
+      if (btnLabel) {
+        btnLabel.innerText = newMoldParts.length > 1 ? `שמור סט (${newMoldParts.length} תבניות) באתר` : 'שמור תבנית זו באתר';
+      }
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function addNewMoldPart() {
+      const idx = newMoldParts.length + 1;
+      newMoldParts.push({ name: `חלק ${idx}`, water: '' });
+      renderNewMoldPartsInputs();
+      updateNewMoldPreview();
+    }
+
+    function removeNewMoldPart(idx) {
+      if (newMoldParts.length <= 1) return;
+      newMoldParts.splice(idx, 1);
+      renderNewMoldPartsInputs();
+      updateNewMoldPreview();
+    }
+
+    function updateNewMoldPartName(idx, val) {
+      if (newMoldParts[idx]) {
+        newMoldParts[idx].name = val;
+      }
+    }
+
+    function updateNewMoldPartWater(idx, val) {
+      if (newMoldParts[idx]) {
+        newMoldParts[idx].water = val;
+        updateNewMoldPreview();
+      }
+    }
+
+    function updateNewMoldPreview() {
+      const mKey = document.getElementById('new-mold-mat').value;
+      const previewBox = document.getElementById('new-mold-calc-preview');
+      if (!previewBox) return;
+
+      const group = calcMoldGroup(newMoldParts, mKey);
+
+      if (newMoldParts.length <= 1) {
+        const c = group.items[0] || { powder: 0, liquid: 0, total: 0 };
+        previewBox.innerHTML = `
+          <div class="flex items-center justify-between text-xs font-black text-slate-300">
+            <span>חישוב כמויות לתבנית זו:</span>
+            <span class="text-teal-300 font-rubik font-bold">${c.total} גרם סה״כ</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-right text-xs">
+            <div class="p-2 rounded-xl bg-teal-500/10 border border-teal-400/20">
+              <span class="text-slate-400 block">אבקה נדרשת</span>
+              <strong class="text-sm font-black text-teal-200 font-rubik">${c.powder} גרם</strong>
+            </div>
+            <div class="p-2 rounded-xl bg-amber-500/10 border border-amber-400/20">
+              <span class="text-slate-400 block">${group.mat.liquid}</span>
+              <strong class="text-sm font-black text-amber-200 font-rubik">${c.liquid} גרם</strong>
+            </div>
+          </div>
+        `;
+      } else {
+        let partsHtml = group.items.map((it, i) => `
+          <div class="flex items-center justify-between text-xs py-1 border-b border-white/5">
+            <span class="font-bold text-slate-200">${it.name} (${it.water}ג' מים):</span>
+            <span class="font-rubik text-teal-300 font-bold">${it.powder}ג' אבקה | ${it.liquid}ג' ${group.mat.liquid} <span class="text-slate-400 font-normal">(${it.total}ג')</span></span>
+          </div>
+        `).join('');
+
+        previewBox.innerHTML = `
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-xs font-black text-amber-300">
+              <span>פירוט חלקי הסט (${newMoldParts.length} תבניות):</span>
+              <span class="font-rubik">${group.totalWater} גרם מים סה״כ</span>
+            </div>
+            ${partsHtml}
+            <div class="p-2.5 rounded-xl bg-teal-500/15 border border-teal-400/30 flex items-center justify-between text-xs sm:text-sm pt-2 mt-1">
+              <span class="font-black text-white">סה״כ לכל הסט:</span>
+              <span class="font-rubik font-black text-teal-300">${group.totalPowder}ג' אבקה | ${group.totalLiquid}ג' ${group.mat.liquid} (סה״כ ${group.totalMix}ג')</span>
+            </div>
+          </div>
+        `;
+      }
     }
 
     function saveNewMold() {
       const nameInput = document.getElementById('new-mold-desc');
-      const waterInput = document.getElementById('new-mold-water');
       const matSelect = document.getElementById('new-mold-mat');
 
       const name = nameInput.value.trim();
-      const water = parseFloat(waterInput.value);
-
       if (!name) {
-        alert('אנא הזן תיאור או שם לתבנית');
+        alert('אנא הזן שם או תיאור לתבנית / לסט');
         nameInput.focus();
         return;
       }
-      if (!water || water <= 0) {
-        alert('אנא הזן כמות מים תקינה שנשקלה לתבנית זו');
-        waterInput.focus();
-        return;
+
+      const validItems = [];
+      for (let i = 0; i < newMoldParts.length; i++) {
+        const p = newMoldParts[i];
+        const w = parseFloat(p.water);
+        if (!w || w <= 0) {
+          alert(`אנא הזן משקל מים תקין עבור ${p.name || `תבנית ${i + 1}`}`);
+          return;
+        }
+        validItems.push({
+          name: p.name.trim() || (newMoldParts.length > 1 ? `חלק ${i + 1}` : name),
+          water: Math.round(w)
+        });
       }
 
       const newMold = {
         id: 'user_' + Date.now(),
         name: name,
         matKey: matSelect.value,
-        water: Math.round(water)
+        items: validItems
       };
 
       savedMolds.unshift(newMold);
       persistSavedMolds();
       renderSavedMoldsList();
 
-      // איפוס שדות
       nameInput.value = '';
-      waterInput.value = '';
+      newMoldParts = [{ name: 'תבנית ראשית', water: '' }];
+      renderNewMoldPartsInputs();
       updateNewMoldPreview();
 
-      alert(`התבנית "${name}" נשמרה בהצלחה באתר!`);
+      alert(`התבנית / הסט "${name}" נשמר בהצלחה באתר!`);
     }
 
     function deleteSavedMold(id) {
@@ -738,22 +950,31 @@
       if (savedMolds.length === 0) {
         container.innerHTML = `
           <div class="p-6 text-center text-slate-400 text-xs sm:text-sm">
-            אין תבניות שמורות כרגע. השתמש בטופס שלמעלה כדי להוסיף תבנית ראשונה!
+            אין תבניות שמורות כרגע. השתמש בטופס שלמעלה כדי להוסיף תבנית או סט ראשון!
           </div>
         `;
         return;
       }
 
       container.innerHTML = savedMolds.map(m => {
-        const c = calcMoldSingle(m.water, m.matKey);
+        const group = calcMoldGroup(m.items, m.matKey);
+        const isSet = m.items.length > 1;
+
         return `
           <div class="liquid-glass-subtle p-3.5 sm:p-4 space-y-2.5 border border-white/10">
             <div class="flex items-center justify-between">
               <div>
-                <h4 class="font-black text-sm sm:text-base text-white">${m.name}</h4>
+                <div class="flex items-center gap-2">
+                  <h4 class="font-black text-sm sm:text-base text-white">${m.name}</h4>
+                  ${isSet ? `
+                    <span class="text-[10px] font-black text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded-full border border-amber-400/30">
+                      סט ${m.items.length} תבניות
+                    </span>
+                  ` : ''}
+                </div>
                 <div class="flex items-center gap-2 mt-0.5">
-                  <span class="text-xs text-teal-300 font-bold bg-teal-500/10 px-2 py-0.5 rounded-md border border-teal-400/20">${c.mat.label}</span>
-                  <span class="text-xs text-slate-300 font-rubik">${m.water} גרם מים</span>
+                  <span class="text-xs text-teal-300 font-bold bg-teal-500/10 px-2 py-0.5 rounded-md border border-teal-400/20">${group.mat.label}</span>
+                  <span class="text-xs text-slate-300 font-rubik">${group.totalWater} גרם מים סה״כ</span>
                 </div>
               </div>
               <button type="button" onclick="deleteSavedMold('${m.id}')" class="text-rose-400 hover:text-rose-300 p-1.5 transition active:scale-95" title="מחק תבנית">
@@ -761,25 +982,37 @@
               </button>
             </div>
 
-            <!-- כמויות מחושבות לתבנית זו -->
+            ${isSet ? `
+              <!-- פירוט חלקי הסט -->
+              <div class="space-y-1.5 bg-slate-900/50 p-2.5 rounded-xl border border-white/5 text-xs">
+                ${group.items.map(it => `
+                  <div class="flex items-center justify-between text-slate-300">
+                    <span class="font-bold">${it.name} (${it.water}ג' מים):</span>
+                    <span class="font-rubik text-teal-300 font-bold">${it.powder}ג' אבקה | ${it.liquid}ג' ${group.mat.liquid} <span class="text-slate-400 font-normal">(${it.total}ג')</span></span>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+
+            <!-- כמויות מחושבות סה"כ לתבנית/לסט -->
             <div class="grid grid-cols-3 gap-2 text-center text-xs pt-1 border-t border-white/5">
               <div class="p-1.5 rounded-lg bg-teal-500/10">
-                <span class="text-slate-400 text-[10px] block">אבקה</span>
-                <strong class="font-rubik text-teal-200 font-black">${c.powder}ג׳</strong>
+                <span class="text-slate-400 text-[10px] block">סך אבקה</span>
+                <strong class="font-rubik text-teal-200 font-black">${group.totalPowder}ג׳</strong>
               </div>
               <div class="p-1.5 rounded-lg bg-amber-500/10">
-                <span class="text-slate-400 text-[10px] block">${c.mat.liquid}</span>
-                <strong class="font-rubik text-amber-200 font-black">${c.liquid}ג׳</strong>
+                <span class="text-slate-400 text-[10px] block">סך ${group.mat.liquid}</span>
+                <strong class="font-rubik text-amber-200 font-black">${group.totalLiquid}ג׳</strong>
               </div>
               <div class="p-1.5 rounded-lg bg-slate-800/80">
                 <span class="text-slate-400 text-[10px] block">סה״כ תערובת</span>
-                <strong class="font-rubik text-white font-black">${c.total}ג׳</strong>
+                <strong class="font-rubik text-white font-black">${group.totalMix}ג׳</strong>
               </div>
             </div>
 
             <button type="button" onclick="loadSavedIntoCalculator('${m.id}')" class="w-full py-2.5 px-3 rounded-xl bg-teal-500/15 hover:bg-teal-500/25 border border-teal-400/30 text-teal-300 font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 transition active:scale-98">
               <i data-lucide="calculator" class="w-4 h-4"></i>
-              <span>חשב תבנית זו במחשבון</span>
+              <span>${isSet ? `חשב סט זה במחשבון (${m.items.length} תבניות)` : 'חשב תבנית זו במחשבון'}</span>
             </button>
           </div>
         `;
@@ -788,16 +1021,18 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // טעינת תבנית שמורה ישירות לתוך המחשבון
+    // טעינת תבנית או סט תבניות ישירות לתוך המחשבון
     function loadSavedIntoCalculator(id) {
       const mold = savedMolds.find(m => m.id === id);
       if (!mold) return;
 
-      // הגדרת החומר והמים במחשבון
       document.getElementById('sel-material').value = mold.matKey;
-      activeMolds = [
-        { id: 1, name: mold.name, water: mold.water }
-      ];
+      
+      activeMolds = mold.items.map((it, idx) => ({
+        id: idx + 1,
+        name: mold.items.length > 1 ? `${mold.name} (${it.name})` : mold.name,
+        water: it.water
+      }));
 
       switchNavTab('calc');
       renderMoldsInputs();
@@ -816,15 +1051,20 @@
       }
 
       listContainer.innerHTML = savedMolds.map(m => {
-        const c = calcMoldSingle(m.water, m.matKey);
+        const group = calcMoldGroup(m.items, m.matKey);
+        const isSet = m.items.length > 1;
+
         return `
           <button type="button" onclick="appendSavedMoldToCalc('${m.id}')" class="w-full p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 text-right flex items-center justify-between transition active:scale-98">
             <div>
-              <strong class="text-sm font-black text-white block">${m.name}</strong>
-              <span class="text-xs text-teal-300 font-rubik">${m.water} גרם מים (${c.mat.label})</span>
+              <div class="flex items-center gap-1.5">
+                <strong class="text-sm font-black text-white block">${m.name}</strong>
+                ${isSet ? `<span class="text-[10px] font-bold text-amber-300 bg-amber-500/20 px-1.5 py-0.5 rounded">סט ${m.items.length}</span>` : ''}
+              </div>
+              <span class="text-xs text-teal-300 font-rubik">${group.totalWater} גרם מים (${group.mat.label})</span>
             </div>
             <div class="text-left font-rubik font-black text-xs text-amber-300 bg-amber-500/10 px-2 py-1 rounded-lg">
-              ${c.total}ג׳ תערובת
+              ${group.totalMix}ג׳ תערובת
             </div>
           </button>
         `;
@@ -838,26 +1078,38 @@
       document.getElementById('modal-favorites-picker').classList.add('hidden');
     }
 
-    // הוספת תבנית מהשמורים כעוד תבנית ליציקה הנוכחית
+    // הוספת תבנית או סט שלם כעוד תבניות ליציקה הנוכחית
     function appendSavedMoldToCalc(id) {
       const mold = savedMolds.find(m => m.id === id);
       if (!mold) return;
 
-      const nextId = activeMolds.length ? Math.max(...activeMolds.map(m => m.id)) + 1 : 1;
-      
-      // אם התבנית הראשונה עדיין ריקה, נשתמש בה במקום להוסיף סתם עוד אחת
+      const itemsToAdd = mold.items.map((it, idx) => ({
+        name: mold.items.length > 1 ? `${mold.name} (${it.name})` : mold.name,
+        water: it.water
+      }));
+
+      // אם יש רק תבנית אחת במחשבון והיא ריקה לחלוטין:
       if (activeMolds.length === 1 && (activeMolds[0].water === '' || activeMolds[0].water === 0)) {
-        activeMolds[0].name = mold.name;
-        activeMolds[0].water = mold.water;
+        activeMolds = itemsToAdd.map((it, i) => ({
+          id: i + 1,
+          name: it.name,
+          water: it.water
+        }));
       } else {
-        activeMolds.push({
-          id: nextId,
-          name: mold.name,
-          water: mold.water
+        itemsToAdd.forEach(it => {
+          const nextId = activeMolds.length ? Math.max(...activeMolds.map(m => m.id)) + 1 : 1;
+          activeMolds.push({
+            id: nextId,
+            name: it.name,
+            water: it.water
+          });
         });
       }
 
       closeSavedPickerModal();
+      renderMoldsInputs();
+      runCalc();
+    }
       renderMoldsInputs();
       runCalc();
     }
@@ -1094,6 +1346,8 @@ ${moldsText}
     document.addEventListener('DOMContentLoaded', () => {
       updateSavedCounts();
       renderMoldsInputs();
+      renderNewMoldPartsInputs();
+      updateNewMoldPreview();
       runCalc();
     });
   </script>
