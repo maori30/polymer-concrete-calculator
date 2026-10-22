@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>מחשבון בטון פולימרי — מותאם לאייפון פרו מקס | גרייש</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+  <title>מחשבון גרייש Pro Max — רשמי ומותאם לאייפון</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -13,17 +17,9 @@
       darkMode: 'class',
       theme: {
         extend: {
-          colors: {
-            brand: {
-              50: '#f0fdfa',
-              100: '#ccfbf1',
-              400: '#2dd4bf',
-              500: '#14b8a6',
-              600: '#0d9488',
-              700: '#0f766e',
-              800: '#115e59',
-              900: '#134e4a',
-            }
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Heebo', 'system-ui', 'sans-serif'],
+            rubik: ['Rubik', '-apple-system', 'sans-serif']
           }
         }
       }
@@ -32,342 +28,719 @@
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --apple-bg: #090d16;
+      --apple-glass-bg: rgba(18, 26, 43, 0.88);
+      --apple-glass-subtle: rgba(26, 38, 62, 0.7);
+      --apple-glass-border: rgba(255, 255, 255, 0.12);
+      --apple-glass-border-light: rgba(255, 255, 255, 0.22);
+      --apple-glass-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
+      --apple-glass-inset: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Heebo', system-ui, sans-serif;
+      background-color: var(--apple-bg);
+      color: #f1f5f9;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      padding: 12px;
+      padding-bottom: env(safe-area-inset-bottom, 24px);
+    }
+
+    .font-rubik {
+      font-family: 'Rubik', -apple-system, sans-serif;
+    }
+
+    /* Apple Luminous Mesh Background */
+    .apple-mesh-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(at 15% 15%, rgba(13, 148, 136, 0.3) 0px, transparent 55%),
+        radial-gradient(at 85% 20%, rgba(2, 132, 199, 0.25) 0px, transparent 55%),
+        radial-gradient(at 50% 85%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
+        #090d16;
+    }
+
+    /* Apple Glass Card */
+    .apple-glass {
+      background: var(--apple-glass-bg);
+      backdrop-filter: blur(36px) saturate(210%);
+      -webkit-backdrop-filter: blur(36px) saturate(210%);
+      border: 1.5px solid var(--apple-glass-border);
+      border-top: 2px solid var(--apple-glass-border-light);
+      box-shadow: var(--apple-glass-shadow), var(--apple-glass-inset);
+      border-radius: 1.75rem;
+    }
+
+    .apple-glass-subtle {
+      background: var(--apple-glass-subtle);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--apple-glass-border);
+      box-shadow: var(--apple-glass-inset);
+      border-radius: 1.25rem;
+    }
+
+    /* Inputs & Select */
+    .apple-input {
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid rgba(51, 65, 85, 0.85);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+      border-radius: 1.25rem;
+      color: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .apple-input:focus {
+      border-color: #14b8a6;
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.25);
+    }
+
+    .apple-select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2314b8a6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: left 1rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-left: 2.75rem;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    /* Segmented Control */
+    .apple-segmented-container {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.25rem;
+      padding: 4px;
+    }
+
+    .apple-segmented-btn {
+      border-radius: 0.95rem;
+      font-weight: 700;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .apple-segmented-btn.active {
+      background: #0d9488;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.45);
+    }
+
+    /* Metric Glass Box */
+    .apple-metric-box {
+      background: rgba(22, 33, 54, 0.9);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-top: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      border-radius: 1.25rem;
+    }
+
+    /* Stepper buttons */
+    .apple-btn-step {
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 0.85rem;
+      color: #f1f5f9;
+      font-weight: 800;
+      transition: all 0.15s ease;
+      touch-action: manipulation;
+    }
+
+    .apple-btn-step:active {
+      transform: scale(0.94);
+      background: rgba(45, 60, 88, 1);
+    }
+
+    .apple-btn-primary {
+      background: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%);
+      color: #ffffff;
+      border-radius: 1.25rem;
+      box-shadow: 0 8px 24px -4px rgba(13, 148, 136, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .apple-btn-primary:active {
+      transform: scale(0.98);
+    }
+  </style>
 </head>
-<body class="text-slate-800 dark:text-slate-100 min-h-screen relative antialiased selection:bg-teal-500 selection:text-white">
+<body class="antialiased">
 
   <!-- Apple Luminous Mesh Background -->
   <div class="apple-mesh-bg"></div>
 
-  <!-- Header (Apple Floating Glass Bar - Optimized for iPhone Pro Max) -->
-  <header class="relative z-20 apple-glass sticky top-2.5 px-5 sm:px-7 py-4 mx-auto max-w-4xl mt-2 rounded-3xl border border-white/90 dark:border-slate-700/60 shadow-lg">
-    <div class="flex items-center justify-between">
-      
-      <div class="flex items-center gap-3.5">
-        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-500 via-teal-400 to-cyan-300 flex items-center justify-center text-white shadow-md shadow-teal-500/25 text-xl font-black border border-white/60 flex-shrink-0">
-          <i data-lucide="sparkles" class="w-6 h-6 text-white"></i>
+  <!-- Main Container: Centered, Perfect for iPhone Pro Max (Max width 560px) -->
+  <div class="relative z-10 max-w-xl mx-auto space-y-4 pt-1 sm:pt-4">
+
+    <!-- Header Card -->
+    <header class="apple-glass p-5 sm:p-6 shadow-xl">
+      <div class="flex items-center justify-between">
+        
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-500 via-teal-400 to-cyan-300 flex items-center justify-center text-white font-black text-2xl shadow-md shadow-teal-500/30 border border-white/60 flex-shrink-0">
+            G
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white">
+                מחשבון גרייש
+              </h1>
+              <span class="text-xs font-black bg-teal-950/80 text-teal-300 px-2.5 py-0.5 rounded-full border border-teal-700/60 shadow-sm">
+                Pro Max
+              </span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 font-medium">יחסים מדויקים והנחיות מניעת שבירה מבית גרייש</p>
+          </div>
         </div>
-        <div>
+
+        <div class="flex items-center gap-2">
+          <span id="header-ratio-badge" class="text-xs sm:text-sm font-black text-teal-300 bg-teal-950/80 px-3 py-1.5 rounded-full border border-teal-700/60 shadow-sm">
+            יחס 3:1
+          </span>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Calculator Form Card -->
+    <main class="apple-glass p-5 sm:p-7 space-y-5 shadow-2xl">
+
+      <!-- 1. בחירת חומר של גרייש (רשימת בחירה מותאמת לאייפון) -->
+      <div class="space-y-2">
+        <label class="block text-base sm:text-lg font-black text-white">
+          1. בחירת חומר של גרייש:
+        </label>
+        <div class="relative">
+          <select id="sel-material" onchange="runCalc()" class="apple-input apple-select w-full p-4 rounded-2xl text-white font-bold text-base sm:text-lg cursor-pointer">
+            <option value="WHITE" selected>שלג פולימרי פרו (Snow Pro) — יחס 3:1 (הנפוץ ביותר)</option>
+            <option value="SNOW100">שלג 100% לבן (Pure White) — יחס 3.2:1 (לבן בוהק)</option>
+            <option value="GYSMO">GYSMO PRO (גיסמו פרו) — יחס 3.3:1 (מהיר וחזק)</option>
+            <option value="FLEX">GYSMO FLEX (גיסמו פלקס) — יחס 3.5:1 (גמיש ועמיד לשבירה)</option>
+            <option value="SAHARA">בטון פולימרי סהרה (Sahara) — יחס 3.5:1 (אפקט אבן)</option>
+            <option value="YELLOW">בטון אבן ירושלמית — יחס 3.8:1 (טבעי אותנטי)</option>
+            <option value="MIRAGE">בטון מיראז׳ אבן אפריקאית — יחס 3.5:1 (בזלת וגרניט)</option>
+            <option value="KAMIN">שלג אבקת קמין — יחס 3:1 (עמיד בחום ונרות)</option>
+            <option value="NIKA">NIKA A1 (דו-רכיבי נוזל+אבקה) — יחס 2.6:1</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 2. מדידת התבנית / שקילת מים -->
+      <div class="space-y-3 pt-2 border-t border-slate-700/60">
+        
+        <div class="flex items-center justify-between">
+          <label class="block text-base sm:text-lg font-black text-white">
+            2. גרם מים שנכנסו לתבנית:
+          </label>
+
+          <!-- Toggle: שקילה מול מידות -->
+          <div class="apple-segmented-container flex items-center text-xs">
+            <button type="button" id="tab-water" onclick="switchMode('water')" class="apple-segmented-btn active px-3 py-1.5 font-bold">
+              💧 שקילת מים
+            </button>
+            <button type="button" id="tab-dims" onclick="switchMode('dims')" class="apple-segmented-btn px-3 py-1.5 font-bold text-slate-400">
+              📐 מידות ס"מ
+            </button>
+          </div>
+        </div>
+
+        <!-- Mode Water Input -->
+        <div id="mode-water-box" class="space-y-3">
           <div class="flex items-center gap-2">
-            <h1 class="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-              מחשבון גרייש <span class="bg-gradient-to-r from-teal-600 to-cyan-500 bg-clip-text text-transparent">Pro Max</span>
-            </h1>
-            <span class="text-xs font-black bg-white/95 text-teal-800 dark:bg-teal-950/90 dark:text-teal-300 px-3 py-1 rounded-full border border-teal-200/80 dark:border-teal-800 shadow-sm">
-              Official
-            </span>
+            
+            <div class="relative flex-1">
+              <input type="number" id="inp-water" value="265" min="1" max="10000" oninput="runCalc()" class="apple-input w-full px-4 py-3.5 text-3xl sm:text-4xl font-black font-rubik text-teal-300 text-left pl-28" dir="ltr">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm sm:text-base font-bold text-slate-400 pointer-events-none">
+                גרם מים
+              </span>
+            </div>
+
+            <!-- iPhone Stepper Buttons -->
+            <div class="flex items-center gap-1 bg-slate-800/90 p-1.5 rounded-2xl border border-slate-700 flex-shrink-0">
+              <button type="button" onclick="stepWater(-50)" class="apple-btn-step px-2.5 py-2.5 text-sm sm:text-base" title="הורד 50 גרם">-50</button>
+              <button type="button" onclick="stepWater(-10)" class="apple-btn-step px-2.5 py-2.5 text-sm sm:text-base" title="הורד 10 גרם">-10</button>
+              <button type="button" onclick="stepWater(10)" class="apple-btn-step px-2.5 py-2.5 text-sm sm:text-base text-teal-300" title="הוסף 10 גרם">+10</button>
+              <button type="button" onclick="stepWater(50)" class="apple-btn-step px-2.5 py-2.5 text-sm sm:text-base text-teal-300" title="הוסף 50 גרם">+50</button>
+            </div>
+
           </div>
-          <p class="text-sm text-slate-600 dark:text-slate-300 font-medium">יחסים מדויקים והנחיות מניעת שבירה מבית גרייש</p>
+
+          <!-- Grayish Tip -->
+          <div class="apple-glass-subtle p-3.5 text-xs sm:text-sm text-slate-300 flex items-start gap-2.5 leading-relaxed">
+            <i data-lucide="info" class="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5"></i>
+            <div>
+              <strong>איך שוקלים לפי גרייש?</strong> מאפסים משקל דיגיטלי (Tare) עם התבנית הריקה, ממלאים מים עד שפת התבנית ושוקלים. 1 גרם מים = 1 סמ"ק במדויק.
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="flex items-center gap-2.5 no-print">
-        <button onclick="window.print()" class="apple-glass-subtle p-3 text-slate-700 dark:text-slate-200 rounded-2xl flex items-center justify-center transition" title="הדפס מתכון">
-          <i data-lucide="printer" class="w-5 h-5 text-teal-600 dark:text-teal-400"></i>
-        </button>
-        <button onclick="toggleDarkMode()" class="apple-glass-subtle p-3 text-slate-700 dark:text-slate-200 rounded-2xl flex items-center justify-center transition" title="החלף מצב תאורה">
-          <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-indigo-500"></i>
-          <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-amber-400"></i>
-        </button>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- Main Container Optimized for iPhone Pro Max -->
-  <main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-5 sm:py-7 space-y-6">
-
-    <!-- 2-Column Responsive Layout (Stacks seamlessly on iPhone Pro Max) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-      
-      <!-- Left Column: Inputs & Controls (7 Cols) -->
-      <div class="lg:col-span-7 space-y-6">
-
-        <!-- Card 1: Mold Measurement (Large, accessible, thumb-friendly) -->
-        <section class="apple-glass p-6 sm:p-8 space-y-5">
-          
-          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 dark:border-slate-800 pb-4">
-            <div class="flex items-center gap-3">
-              <span class="w-10 h-10 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-black text-base shadow-md shadow-teal-600/30 flex-shrink-0">1</span>
-              <div>
-                <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">מדידת התבנית</h2>
-                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">שקילת מים בגרמים או לפי מידות</p>
-              </div>
-            </div>
-
-            <!-- Apple Segmented Control Switcher -->
-            <div class="apple-segmented-container flex items-center text-sm">
-              <button type="button" id="mode-btn-water" class="apple-segmented-btn active px-4 py-2 font-bold">
-                💧 שקילת מים
-              </button>
-              <button type="button" id="mode-btn-dims" class="apple-segmented-btn px-4 py-2 font-bold text-slate-600 dark:text-slate-400">
-                📐 מידות בס"מ
-              </button>
-            </div>
-          </div>
-
-          <!-- Mode 1: Water Weight Input (Prominent, large font) -->
-          <div id="box-water-input" class="space-y-4">
-            
-            <div>
-              <label class="block text-base sm:text-lg font-black text-slate-800 dark:text-slate-200 mb-2.5">
-                כמה גרם מים נכנסו לתבנית אחת?
-              </label>
-              
-              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <div class="relative flex-1">
-                  <input type="number" id="water-weight-input" min="1" max="10000" value="265" class="apple-input w-full px-5 py-4 text-3xl sm:text-4xl font-black font-rubik text-teal-900 dark:text-teal-200 text-left pl-32" dir="ltr">
-                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-base font-bold text-slate-400 dark:text-slate-500 pointer-events-none">
-                    גרם מים
-                  </span>
-                </div>
-
-                <!-- Apple Stepper Buttons (Big touch targets for Pro Max) -->
-                <div class="flex items-center justify-center gap-1.5 bg-slate-100/90 dark:bg-slate-800/90 p-2 rounded-2xl border border-white/80 dark:border-slate-700">
-                  <button type="button" onclick="adjustWater(-50)" class="apple-glass-subtle px-3.5 py-2.5 text-base font-bold rounded-xl hover:bg-white dark:hover:bg-slate-700 transition" title="הורד 50 גרם">-50</button>
-                  <button type="button" onclick="adjustWater(-10)" class="apple-glass-subtle px-3.5 py-2.5 text-base font-bold rounded-xl hover:bg-white dark:hover:bg-slate-700 transition" title="הורד 10 גרם">-10</button>
-                  <button type="button" onclick="adjustWater(10)" class="apple-glass-subtle px-3.5 py-2.5 text-base font-bold rounded-xl hover:bg-white dark:hover:bg-slate-700 transition text-teal-700 dark:text-teal-300" title="הוסף 10 גרם">+10</button>
-                  <button type="button" onclick="adjustWater(50)" class="apple-glass-subtle px-3.5 py-2.5 text-base font-bold rounded-xl hover:bg-white dark:hover:bg-slate-700 transition text-teal-700 dark:text-teal-300" title="הוסף 50 גרם">+50</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Apple Callout Hint -->
-            <div class="apple-glass-subtle p-4 text-sm sm:text-base text-slate-700 dark:text-slate-300 flex items-start gap-3 leading-relaxed">
-              <i data-lucide="info" class="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5"></i>
-              <div>
-                <strong>איך שוקלים לפי גרייש?</strong> מאפסים משקל דיגיטלי (Tare) עם התבנית הריקה, ממלאים מים עד שפת התבנית ושוקלים. 1 גרם מים = 1 סמ"ק במדויק.
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Mode 2: Dimensions in CM -->
-          <div id="box-dims-input" class="hidden space-y-4">
-            <div class="grid grid-cols-3 gap-2.5">
-              <button type="button" class="dim-shape-btn apple-glass-subtle p-3 text-base font-bold flex items-center justify-center gap-1.5 transition active-dim-shape" data-shape="oval">
-                🥚 מגש אובלי
-              </button>
-              <button type="button" class="dim-shape-btn apple-glass-subtle p-3 text-base font-bold flex items-center justify-center gap-1.5 transition" data-shape="rectangle">
-                ⬛ מלבן / ריבוע
-              </button>
-              <button type="button" class="dim-shape-btn apple-glass-subtle p-3 text-base font-bold flex items-center justify-center gap-1.5 transition" data-shape="circle">
-                ⚪ גליל / עיגול
-              </button>
-            </div>
-
-            <div id="dim-group-oval" class="grid grid-cols-3 gap-3 text-sm sm:text-base">
-              <div><label class="block mb-1.5 font-bold">אורך (ס"מ)</label><input type="number" id="dim-oval-l" value="18" step="0.1" class="apple-input w-full p-3 font-rubik text-left" dir="ltr"></div>
-              <div><label class="block mb-1.5 font-bold">רוחב (ס"מ)</label><input type="number" id="dim-oval-w" value="9.5" step="0.1" class="apple-input w-full p-3 font-rubik text-left" dir="ltr"></div>
-              <div><label class="block mb-1.5 font-bold">עומק (ס"מ)</label><input type="number" id="dim-oval-d" value="1.5" step="0.1" class="apple-input w-full p-3 font-rubik text-left" dir="ltr"></div>
-            </div>
-
-            <div id="dim-group-rectangle" class="hidden grid grid-cols-3 gap-3 text-sm sm:text-base">
-              <div><label class="block mb-1.5 font-bold">אורך (ס"מ)</label><input type="number" id="dim-rect-l" value="15" step="0.1" class="apple-input w-full p-3 font-rubik text-left" dir="ltr"></div>
-              <div><label class="block mb-1.5 font-bold">רוחב (ס"מ)</label><input type="number" id="dim-rect-w" value="10" step="0.1" class="apple-input w-full p-3 font-rubik text-left" dir="ltr"></div>
-              <div><label class="block mb-1.5 font-bold">עומק (ס"מ)</label><input type="number" id="dim-rect-d" value="1.5" step="0.1" class="apple-input w-full p-3 font-rubik text-left" dir="ltr"></div>
-            </div>
-
-            <div id="dim-group-circle" class="hidden grid grid-cols-2 gap-3 text-sm sm:text-base">
-              <div><label class="block mb-1.5 font-bold">קוטר (ס"מ)</label><input type="number" id="dim-circle-dia" value="10" step="0.1" class="apple-input w-full p-3 font-rubik text-left" dir="ltr"></div>
-              <div><label class="block mb-1.5 font-bold">עומק (ס"מ)</label><input type="number" id="dim-circle-d" value="1.5" step="0.1" class="apple-input w-full p-3 font-rubik text-left" dir="ltr"></div>
-            </div>
-          </div>
-
-          <!-- Quantity / Units Stepper -->
-          <div class="pt-4 border-t border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
-            <div>
-              <span class="text-base sm:text-lg font-black text-slate-800 dark:text-slate-200 block">כמה תבניות תרצו למלא ביציקה זו?</span>
-              <span class="text-sm text-slate-400 font-medium">חישוב כמויות לכל התבניות יחד</span>
-            </div>
-            <div class="flex items-center gap-2 apple-glass-subtle p-2 rounded-2xl">
-              <button type="button" id="units-minus-btn" class="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 font-black text-xl hover:bg-slate-50 flex items-center justify-center transition shadow-sm active:scale-95">-</button>
-              <input type="number" id="grayish-units-input" min="1" max="100" value="1" class="w-16 py-1 text-center font-rubik font-black text-xl bg-transparent border-none focus:outline-none">
-              <button type="button" id="units-plus-btn" class="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 font-black text-xl hover:bg-slate-50 flex items-center justify-center transition shadow-sm active:scale-95">+</button>
-            </div>
-          </div>
-
-        </section>
-
-        <!-- Card 2: Materials of Grayish (Enlarged Cards) -->
-        <section class="apple-glass p-6 sm:p-8 space-y-4">
-          
-          <div class="flex items-center gap-3 border-b border-slate-200/70 dark:border-slate-800 pb-3">
-            <span class="w-10 h-10 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-black text-base shadow-md shadow-teal-600/30 flex-shrink-0">2</span>
-            <div>
-              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">איזה חומר של גרייש בחרת?</h2>
-              <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">בחרו את החומר להפעלת מקדמי גרייש הרשמיים</p>
-            </div>
-          </div>
-
-          <!-- Grayish Materials Grid -->
-          <div id="grayish-materials-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Populated dynamically via JS -->
-          </div>
-
-        </section>
-
-        <!-- Card 3: Anti-Breakage Guide (Enlarged) -->
-        <section class="apple-glass p-6 sm:p-8 space-y-4 border-teal-200/80 dark:border-teal-900/60 shadow-md">
-          <div class="flex items-center gap-2.5 text-teal-900 dark:text-teal-200 font-black text-lg sm:text-xl">
-            <i data-lucide="shield-check" class="w-6 h-6 text-teal-600"></i>
-            <span>4 כללי הברזל של גרייש למניעת שבירה וסדקים ביציקה:</span>
-          </div>
-          <ul id="grayish-tips-list" class="space-y-3.5 pt-1">
-            <!-- Populated dynamically via JS -->
-          </ul>
-        </section>
-
-      </div>
-
-      <!-- Right Column: Results Card (5 Cols) - Sticky -->
-      <div class="lg:col-span-5 space-y-6">
-
-        <!-- Live Result Card -->
-        <div class="apple-glass p-6 sm:p-8 sticky top-24 print-card space-y-5 border-teal-400/50 dark:border-teal-400/30 shadow-2xl">
-          
-          <div class="flex items-center justify-between pb-4 border-b border-slate-200/70 dark:border-slate-800">
-            <div>
-              <span class="text-xs sm:text-sm font-black uppercase tracking-wider text-teal-700 dark:text-teal-400">מתכון שקילה מוכן לעבודה</span>
-              <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-0.5" id="res-mat-name">שלג פולימרי פרו</h3>
-            </div>
-            <div class="w-12 h-12 rounded-2xl bg-teal-500/15 dark:bg-teal-400/15 text-teal-700 dark:text-teal-300 flex items-center justify-center font-black text-2xl border border-teal-500/30 shadow-sm flex-shrink-0">
-              ✓
-            </div>
-          </div>
-
-          <!-- Formula Ratio Pill -->
-          <div class="apple-glass-subtle p-4 text-sm sm:text-base leading-relaxed">
-            <span class="font-black text-teal-800 dark:text-teal-300 block mb-1">יחס הערבוב של החומר:</span>
-            <span id="res-ratio-summary" class="text-slate-700 dark:text-slate-200 font-medium"></span>
-          </div>
-
-          <!-- Visual Results: Single Mold vs All Molds (Numbers preserved big and bold!) -->
-          <div class="space-y-4">
-            
-            <!-- Box 1: For 1 Mold -->
-            <div class="apple-metric-card p-5 space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-base font-black text-slate-700 dark:text-slate-300">שקילה לתבנית אחת:</span>
-                <span class="text-sm font-bold text-teal-700 dark:text-teal-400 font-rubik" id="one-total-mix"></span>
-              </div>
-
-              <div class="grid grid-cols-2 gap-3 text-right">
-                <div class="p-4 rounded-2xl bg-teal-50/70 dark:bg-teal-950/40 border border-teal-200/60 dark:border-teal-900/60">
-                  <span class="text-sm sm:text-base font-bold text-teal-800 dark:text-teal-300 block">אבקה</span>
-                  <div class="text-3xl font-black text-teal-800 dark:text-teal-200 font-rubik mt-1" id="one-powder-display">477 גרם</div>
-                </div>
-
-                <div class="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-900/60">
-                  <span class="text-sm sm:text-base font-bold text-amber-800 dark:text-amber-300 block" id="one-liquid-label">מים</span>
-                  <div class="text-3xl font-black text-amber-700 dark:text-amber-300 font-rubik mt-1" id="one-liquid-display">159 גרם</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Box 2: Total Project -->
-            <div class="apple-metric-card p-5 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-transparent border-teal-500/30 space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-base font-black text-teal-950 dark:text-teal-200">סך הכל לפרויקט כולו:</span>
-                <span class="text-sm font-black text-teal-700 dark:text-teal-300 font-rubik" id="total-mix-all"></span>
-              </div>
-
-              <div class="grid grid-cols-2 gap-3 text-right">
-                <div class="p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-teal-200 dark:border-teal-900 shadow-sm">
-                  <span class="text-sm sm:text-base font-bold text-slate-500 dark:text-slate-400 block">סך כל האבקה</span>
-                  <div class="text-3xl font-black text-teal-800 dark:text-teal-300 font-rubik mt-1" id="total-powder-display">477 גרם</div>
-                </div>
-
-                <div class="p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-amber-200 dark:border-amber-900 shadow-sm">
-                  <span class="text-sm sm:text-base font-bold text-slate-500 dark:text-slate-400 block" id="total-liquid-label">סך כל המים</span>
-                  <div class="text-3xl font-black text-amber-700 dark:text-amber-400 font-rubik mt-1" id="total-liquid-display">159 גרם</div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="text-center text-sm sm:text-base text-slate-500 dark:text-slate-400 font-medium">
-            מים שנמדדו בתבנית: <strong id="res-water-measured" class="text-slate-900 dark:text-slate-100 font-rubik font-black">265 גרם</strong>
-          </div>
-
-          <!-- Grayish Packaging Recommendation -->
-          <div id="grayish-buy-box"></div>
-
-          <!-- Action Buttons -->
-          <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-200/70 dark:border-slate-800 no-print">
-            <button type="button" id="grayish-copy-btn" class="apple-btn-primary py-4 px-4 text-base font-extrabold flex items-center justify-center gap-2 transition">
-              <i data-lucide="copy" class="w-5 h-5"></i>
-              <span>העתק מתכון</span>
+        <!-- Mode Dimensions Box -->
+        <div id="mode-dims-box" class="hidden space-y-3">
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="setShape('oval')" id="shape-oval" class="apple-glass-subtle p-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-1 rounded-xl bg-teal-950/70 border-teal-500 text-teal-300">
+              🥚 מגש אובלי
             </button>
-            <button type="button" id="grayish-save-btn" class="apple-glass-interactive apple-glass-subtle py-4 px-4 text-base font-extrabold flex items-center justify-center gap-2 transition text-slate-800 dark:text-slate-200">
-              <i data-lucide="bookmark" class="w-5 h-5 text-amber-500"></i>
-              <span>שמור מתכון</span>
+            <button type="button" onclick="setShape('rectangle')" id="shape-rectangle" class="apple-glass-subtle p-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-1 rounded-xl text-slate-300">
+              ⬛ מלבן/ריבוע
+            </button>
+            <button type="button" onclick="setShape('circle')" id="shape-circle" class="apple-glass-subtle p-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-1 rounded-xl text-slate-300">
+              ⚪ עיגול
             </button>
           </div>
 
-          <!-- Saved Recipes Drawer -->
-          <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800 no-print space-y-2">
-            <h4 class="text-base font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-2">
-              <i data-lucide="history" class="w-4 h-4 text-teal-600"></i>
-              <span>מתכונים שמורים</span>
-            </h4>
-            <div id="grayish-saved-recipes" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
+          <div id="dims-inputs-grid" class="grid grid-cols-3 gap-2 text-xs sm:text-sm">
+            <div>
+              <label class="block mb-1 font-bold text-slate-300" id="lbl-dim-1">אורך (ס"מ)</label>
+              <input type="number" id="dim-1" value="18" step="0.1" oninput="runCalc()" class="apple-input w-full p-2.5 font-rubik text-left" dir="ltr">
+            </div>
+            <div>
+              <label class="block mb-1 font-bold text-slate-300" id="lbl-dim-2">רוחב (ס"מ)</label>
+              <input type="number" id="dim-2" value="9.5" step="0.1" oninput="runCalc()" class="apple-input w-full p-2.5 font-rubik text-left" dir="ltr">
+            </div>
+            <div id="box-dim-3">
+              <label class="block mb-1 font-bold text-slate-300" id="lbl-dim-3">עומק (ס"מ)</label>
+              <input type="number" id="dim-3" value="1.5" step="0.1" oninput="runCalc()" class="apple-input w-full p-2.5 font-rubik text-left" dir="ltr">
+            </div>
           </div>
-
         </div>
 
       </div>
 
-    </div>
-  </main>
-
-  <!-- Mobile Quick Summary Bar (Sticky on iPhone Pro Max) -->
-  <div class="lg:hidden apple-mobile-bar apple-glass p-3 rounded-2xl flex items-center justify-between no-print">
-    <div class="flex items-center gap-2">
-      <div class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></div>
-      <div class="text-xs font-bold leading-tight">
-        <span class="text-slate-400">אבקה:</span> <strong id="bar-powder" class="text-teal-400 font-rubik font-black text-sm">477ג׳</strong>
-        <span class="mx-1 text-slate-600">|</span>
-        <span class="text-slate-400">מים:</span> <strong id="bar-liquid" class="text-amber-400 font-rubik font-black text-sm">159ג׳</strong>
+      <!-- 3. כמות תבניות להכנה -->
+      <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80">
+        <div>
+          <span class="text-sm sm:text-base font-black text-white block">כמות תבניות להכנה:</span>
+          <span class="text-xs text-slate-400 font-medium">חישוב כמויות לכל התבניות יחד</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="setUnits(-1)" class="w-10 h-10 rounded-xl bg-slate-700/90 font-black text-xl text-white flex items-center justify-center transition active:scale-95 shadow-sm">-</button>
+          <span id="disp-units" class="w-8 text-center font-black font-rubik text-xl text-white">1</span>
+          <button type="button" onclick="setUnits(1)" class="w-10 h-10 rounded-xl bg-slate-700/90 font-black text-xl text-white flex items-center justify-center transition active:scale-95 shadow-sm">+</button>
+        </div>
       </div>
-    </div>
-    <span id="bar-total" class="text-xs font-black text-slate-300 font-rubik bg-slate-800 px-2.5 py-1 rounded-lg">סה״כ 636ג׳</span>
+
+      <!-- 4. כרטיס מתכון שקילה מוכן לעבודה (התוצאות) -->
+      <div class="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-teal-950/60 via-slate-900/90 to-slate-900 border border-teal-500/40 shadow-xl space-y-4">
+        
+        <div class="flex items-center justify-between pb-3 border-b border-teal-800/40 text-xs sm:text-sm">
+          <span class="font-black text-teal-300" id="res-ratio-desc">יחס רשמי: 1 חלק מים ל-3 אבקה</span>
+          <span class="font-bold text-slate-400" id="res-water-echo">265 גרם מים בתבנית</span>
+        </div>
+
+        <!-- Single Mold Breakdown -->
+        <div class="space-y-2">
+          <div class="flex justify-between items-center text-xs sm:text-sm font-bold text-slate-300">
+            <span>שקילה לתבנית אחת:</span>
+            <span class="font-rubik text-teal-400 font-black" id="res-total-one">636 גרם סה"כ לתבנית</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-right">
+            <!-- Powder -->
+            <div class="apple-metric-box p-3.5 sm:p-4">
+              <div class="flex items-center gap-1.5 mb-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
+                <span class="text-xs sm:text-sm font-bold text-slate-300">אבקה נדרשת</span>
+              </div>
+              <div class="text-3xl sm:text-4xl font-black text-teal-300 font-rubik" id="res-powder-one">477 גרם</div>
+              <span class="text-xs text-slate-400 font-medium">לתבנית אחת</span>
+            </div>
+
+            <!-- Liquid -->
+            <div class="apple-metric-box p-3.5 sm:p-4">
+              <div class="flex items-center gap-1.5 mb-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                <span class="text-xs sm:text-sm font-bold text-slate-300" id="lbl-liquid-one">מים נקיים</span>
+              </div>
+              <div class="text-3xl sm:text-4xl font-black text-amber-300 font-rubik" id="res-liquid-one">159 גרם</div>
+              <span class="text-xs text-slate-400 font-medium">לתבנית אחת</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total Project Breakdown (When units >= 1) -->
+        <div id="box-total-project" class="pt-3 border-t border-teal-800/30 space-y-2">
+          <div class="flex justify-between items-center text-xs sm:text-sm font-bold text-slate-300">
+            <span>סך הכל לפרויקט כולו:</span>
+            <span class="font-rubik text-teal-300 font-black" id="res-total-all">636 גרם (0.64 ק"ג)</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-right">
+            <div class="p-3 rounded-xl bg-slate-900/90 border border-teal-700/50">
+              <span class="text-xs text-slate-400 font-bold block mb-0.5">סך כל האבקה</span>
+              <div class="text-2xl sm:text-3xl font-black text-teal-300 font-rubik" id="res-powder-all">477 גרם</div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-900/90 border border-amber-700/50">
+              <span class="text-xs text-slate-400 font-bold block mb-0.5" id="lbl-liquid-all">סך כל המים</span>
+              <div class="text-2xl sm:text-3xl font-black text-amber-300 font-rubik" id="res-liquid-all">159 גרם</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Packaging Recommendation -->
+        <div id="box-recommendation" class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700 text-xs sm:text-sm"></div>
+
+        <!-- Action Button: Copy -->
+        <button type="button" onclick="copyRecipe()" class="apple-btn-primary w-full py-3.5 px-4 font-black text-base flex items-center justify-center gap-2 transition shadow-lg">
+          <i data-lucide="copy" class="w-5 h-5"></i>
+          <span>העתק מתכון שקילה ללוח</span>
+        </button>
+
+      </div>
+
+      <!-- 5. 4 כללי הברזל של גרייש למניעת שבירה -->
+      <div class="apple-glass-subtle p-4 sm:p-5 space-y-3 border-teal-700/40">
+        <div class="flex items-center gap-2 text-teal-300 font-black text-sm sm:text-base">
+          <i data-lucide="shield-check" class="w-5 h-5 text-teal-400 flex-shrink-0"></i>
+          <span>4 כללי הברזל של גרייש למניעת שבירה וסדקים:</span>
+        </div>
+        <ul id="tips-list" class="space-y-2.5 text-xs sm:text-sm leading-relaxed text-slate-300">
+          <!-- Populated via JS -->
+        </ul>
+      </div>
+
+    </main>
+
+    <footer class="text-center text-xs text-slate-500 py-3">
+      <p>מחשבון גרייש Pro Max • מותאם לאייפון • נתונים רשמיים grayish.co.il</p>
+    </footer>
+
   </div>
 
-  <footer class="relative z-10 mt-12 py-6 border-t border-slate-200/60 dark:border-slate-800 text-center text-sm text-slate-400 pb-20 lg:pb-6 no-print">
-    <p>מחשבון בטון פולימרי • Apple Glass מותאם לאייפון פרו מקס • מנוע GRAYISH</p>
-  </footer>
-
-  <script src="app.js"></script>
   <script>
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-      try {
-        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-      } catch (e) {}
-    }
-    try {
-      if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
+    // מאגר חומרי גרייש הרשמי ומדויק
+    const MATERIALS = {
+      WHITE: {
+        label: "שלג פולימרי פרו (Snow Pro)",
+        shortRatio: "3:1",
+        x: 0.60,
+        y: 3.0,
+        basis: "powder",
+        liquid: "מים",
+        packs: [[1.5, 74], [3, 139], [6, 264], [9, 378], [18, 725], [27, 1045], [36, 1345], [54, 2015], [72, 2680], [128, 4377]],
+        tips: [
+          "שקלו תמיד את המים תחילה לקערת הערבוב, ואז שפכו את האבקה בהדרגה למים.",
+          "יחס מדויק של גרייש: על כל 100 גרם מים - 300 גרם אבקה. אל תוסיפו מים מעבר לכך!",
+          "לתוצאה דחוסה ומבריקה במיוחד (וחיזוק נוסף נגד שבירה), ניתן לעבוד ביחס 3.5:1 (פחות מים).",
+          "זמן שליפה מהתבנית: מומלץ להמתין לפחות 35–45 דקות עד שהיציקה התקררה לגמרי מהחום שלה.",
+          "ייבוש מלא: החומר מגיע לחוזק אבן סופי לאחר 24–48 שעות ייבוש באוויר הפתוח."
+        ]
+      },
+      SNOW100: {
+        label: "שלג 100% לבן (Pure White)",
+        shortRatio: "3.2:1",
+        x: 0.55,
+        y: 3.2,
+        basis: "powder",
+        liquid: "מים",
+        packs: [[1, 52], [1.5, 76], [3, 145], [9, 395], [18, 850], [27, 1075], [36, 1400], [52, 1910], [72, 2680]],
+        tips: [
+          "ערבבו ביסודיות 2-3 דקות עד לקבלת בלילה קרמית ללא גושים.",
+          "שחרור בועות: הקישו בעדינות רבה על דפנות תבנית הסיליקון כדי להעלות בועות אוויר.",
+          "אל תחלצו את הפריט כשהוא חם - חכו להתקררות מוחלטת של היציקה."
+        ]
+      },
+      GYSMO: {
+        label: "GYSMO PRO (גיסמו פרו)",
+        shortRatio: "3.3:1",
+        x: 0.515,
+        y: 3.3,
+        basis: "powder",
+        liquid: "מים",
+        packs: [[1.5, 91], [3, 180], [6, 313], [9, 456], [18, 865], [27, 1174], [36, 1390], [54, 1920], [72, 2420]],
+        tips: [
+          "זמן עבודה קצר: מזגו מיד בתום הערבוב (תוך 5–8 דקות מרגע המגע עם המים).",
+          "המתנה של 40 דקות לפחות לפני שליפה מונעת שבירת קצוות עדינים."
+        ]
+      },
+      FLEX: {
+        label: "GYSMO FLEX (גיסמו פלקס)",
+        shortRatio: "3.5:1",
+        x: 0.515,
+        y: 3.5,
+        basis: "powder",
+        liquid: "מים",
+        packs: [[1, 67], [1.5, 91], [3, 180], [6, 313], [9, 456], [18, 865], [27, 1174], [36, 1390], [72, 2420]],
+        tips: [
+          "החומר המוביל של גרייש לפריטים דקים או עדינים הנוטים להישבר.",
+          "יחס עבודה 1 מים ל-3.5 אבקה - נותן חוזק מבני וגמישות מרבית נגד נפילות."
+        ]
+      },
+      SAHARA: {
+        label: "בטון פולימרי סהרה (Sahara)",
+        shortRatio: "3.5:1",
+        x: 0.515,
+        y: 3.5,
+        basis: "powder",
+        liquid: "מים",
+        packs: [[1.5, 99], [3, 168], [6, 335], [9, 470], [18, 938], [27, 1390], [36, 1650], [72, 3000]],
+        tips: [
+          "בטון פולימרי עשיר בגרגירים טבעיים - ערבוב יסודי מונע שקיעת אגרגטים לתחתית.",
+          "ייבוש של 24 שעות מחזק את מבנה האבן ומעניק מגע חלק ומלוטש."
+        ]
+      },
+      YELLOW: {
+        label: "בטון אבן ירושלמית",
+        shortRatio: "3.8:1",
+        x: 0.49,
+        y: 3.8,
+        basis: "powder",
+        liquid: "מים",
+        packs: [[1.5, 99], [3, 168], [6, 335], [9, 470], [18, 938], [27, 1390], [36, 1650], [72, 3000]],
+        tips: [
+          "בשל ריכוז אבקה גבוה (3.8:1), הוסיפו את האבקה ב-3 שלבים וערבבו היטב.",
+          "רטט קל בתבנית מוציא בועות מבין גרגרי האבן הירושלמית."
+        ]
+      },
+      MIRAGE: {
+        label: "בטון מיראז׳ (אבן אפריקאית)",
+        shortRatio: "3.5:1",
+        x: 0.515,
+        y: 3.5,
+        basis: "powder",
+        liquid: "מים",
+        packs: [[1.5, 99], [3, 168], [6, 335], [9, 470], [18, 938], [27, 1390], [36, 1650], [72, 3000]],
+        tips: [
+          "חומר דחוס מאוד. רצוי להמתין שעה מלאה לפני חליצה מהתבנית.",
+          "סילר אקרילי לאחר 48 שעות מדגיש את עומק הגוון הכהה ומגן משברים."
+        ]
+      },
+      KAMIN: {
+        label: "שלג אבקת קמין",
+        shortRatio: "3:1",
+        x: 0.60,
+        y: 3.0,
+        basis: "powder",
+        liquid: "מים",
+        packs: [[1.5, 85], [3, 155], [6, 290], [9, 420], [18, 810]],
+        tips: [
+          "מתאים במיוחד לכלי נרות וחימום - עמיד בחום ישיר של שעווה בוערת.",
+          "עובי דופן מינימלי מומלץ לכלי נרות: לפחות 6–8 מ\"מ."
+        ]
+      },
+      NIKA: {
+        label: "NIKA A1 (דו-רכיבי)",
+        shortRatio: "2.6:1",
+        x: 0.56,
+        y: 2.6,
+        basis: "liquid",
+        liquid: "נוזל אקרילי A1",
+        packs: [[1.5, 120], [3.5, 230], [7, 430], [14, 820]],
+        tips: [
+          "שימו לב: משתמשים אך ורק בנוזל האקרילי המצורף, אסור להוסיף מים!",
+          "מומלץ לעבוד עם מברשת בשכבה ראשונה להוצאת בועות מושלמת."
+        ]
       }
-    } catch(e) {}
+    };
 
-    function adjustWater(delta) {
-      const inp = document.getElementById('water-weight-input');
-      if (!inp) return;
+    let currentMode = 'water'; // 'water' or 'dims'
+    let currentShape = 'oval'; // 'oval', 'rectangle', 'circle'
+    let unitsCount = 1;
+
+    function switchMode(mode) {
+      currentMode = mode;
+      document.getElementById('tab-water').classList.toggle('active', mode === 'water');
+      document.getElementById('tab-dims').classList.toggle('active', mode === 'dims');
+      document.getElementById('tab-water').classList.toggle('text-slate-400', mode !== 'water');
+      document.getElementById('tab-dims').classList.toggle('text-slate-400', mode !== 'dims');
+      
+      document.getElementById('mode-water-box').classList.toggle('hidden', mode !== 'water');
+      document.getElementById('mode-dims-box').classList.toggle('hidden', mode !== 'dims');
+      runCalc();
+    }
+
+    function setShape(shape) {
+      currentShape = shape;
+      ['oval', 'rectangle', 'circle'].forEach(s => {
+        const btn = document.getElementById(`shape-${s}`);
+        const isActive = s === shape;
+        btn.classList.toggle('bg-teal-950/70', isActive);
+        btn.classList.toggle('border-teal-500', isActive);
+        btn.classList.toggle('text-teal-300', isActive);
+        btn.classList.toggle('text-slate-300', !isActive);
+      });
+
+      const lbl1 = document.getElementById('lbl-dim-1');
+      const lbl2 = document.getElementById('lbl-dim-2');
+      const box3 = document.getElementById('box-dim-3');
+
+      if (shape === 'circle') {
+        lbl1.innerText = 'קוטר (ס"מ)';
+        lbl2.innerText = 'עומק (ס"מ)';
+        box3.classList.add('hidden');
+      } else {
+        lbl1.innerText = 'אורך (ס"מ)';
+        lbl2.innerText = 'רוחב (ס"מ)';
+        box3.classList.remove('hidden');
+      }
+      runCalc();
+    }
+
+    function stepWater(delta) {
+      const inp = document.getElementById('inp-water');
       let val = Math.max(1, (parseFloat(inp.value) || 0) + delta);
       inp.value = val;
-      grayishState.waterWeightInMold = val;
-      updateUI();
+      runCalc();
     }
 
-    document.getElementById('mode-btn-water')?.addEventListener('click', function() {
-      this.classList.add('active');
-      document.getElementById('mode-btn-dims')?.classList.remove('active');
-    });
-    document.getElementById('mode-btn-dims')?.addEventListener('click', function() {
-      this.classList.add('active');
-      document.getElementById('mode-btn-water')?.classList.remove('active');
+    function setUnits(delta) {
+      unitsCount = Math.max(1, unitsCount + delta);
+      document.getElementById('disp-units').innerText = unitsCount;
+      runCalc();
+    }
+
+    function calcVolumeFromDimensions() {
+      const v1 = Math.max(0, parseFloat(document.getElementById('dim-1').value) || 0);
+      const v2 = Math.max(0, parseFloat(document.getElementById('dim-2').value) || 0);
+      const v3 = Math.max(0, parseFloat(document.getElementById('dim-3').value) || 0);
+
+      let vol = 0;
+      if (currentShape === 'rectangle') {
+        vol = v1 * v2 * v3;
+      } else if (currentShape === 'circle') {
+        const r = v1 / 2;
+        vol = Math.PI * r * r * v2;
+      } else if (currentShape === 'oval') {
+        vol = Math.PI * (v1 / 2) * (v2 / 2) * v3;
+      }
+      return Math.round(vol);
+    }
+
+    function recommendPackage(needKg, packs) {
+      if (!packs || packs.length === 0) return null;
+      let best = null;
+      for (let i = 0; i < packs.length; i++) {
+        const packSize = packs[i][0];
+        const packPrice = packs[i][1];
+        const count = Math.max(1, Math.ceil(needKg / packSize));
+        const cover = count * packSize;
+        const cost = count * packPrice;
+        const candidate = { count, packSize, packPrice, cover, cost };
+
+        if (!best || candidate.cost < best.cost || 
+           (candidate.cost === best.cost && candidate.cover < best.cover)) {
+          best = candidate;
+        }
+      }
+      return best;
+    }
+
+    function runCalc() {
+      const matKey = document.getElementById('sel-material').value;
+      const mat = MATERIALS[matKey] || MATERIALS.WHITE;
+
+      let moldWater = currentMode === 'water' 
+        ? Math.max(0, parseFloat(document.getElementById('inp-water').value) || 0)
+        : calcVolumeFromDimensions();
+
+      let oneLiquid, onePowder, oneTotal;
+      if (mat.basis === 'powder') {
+        onePowder = moldWater * mat.x * mat.y;
+        oneLiquid = (moldWater * mat.x * mat.y) / mat.y;
+        oneTotal = onePowder + oneLiquid;
+      } else {
+        oneLiquid = moldWater * mat.x;
+        onePowder = moldWater * mat.x * mat.y;
+        oneTotal = oneLiquid + onePowder;
+      }
+
+      const totalPowder = Math.round(onePowder * unitsCount);
+      const totalLiquid = Math.round(oneLiquid * unitsCount);
+      const totalMix = Math.round(oneTotal * unitsCount);
+
+      const onePowderRound = Math.round(onePowder);
+      const oneLiquidRound = Math.round(oneLiquid);
+      const oneTotalRound = Math.round(oneTotal);
+
+      // Header Badge
+      document.getElementById('header-ratio-badge').innerText = `יחס ${mat.shortRatio}`;
+
+      // Results Text
+      document.getElementById('res-ratio-desc').innerText = `יחס רשמי: 1 חלק ${mat.liquid} ל-${mat.y} אבקה`;
+      document.getElementById('res-water-echo').innerText = `${moldWater} גרם מים בתבנית`;
+
+      // Single Mold
+      document.getElementById('res-total-one').innerText = `${oneTotalRound} גרם סה"כ לתבנית`;
+      document.getElementById('res-powder-one').innerText = `${onePowderRound} גרם`;
+      document.getElementById('res-liquid-one').innerText = `${oneLiquidRound} גרם`;
+      document.getElementById('lbl-liquid-one').innerText = mat.liquid;
+
+      // Total All
+      document.getElementById('res-total-all').innerText = `${totalMix} גרם (${(totalMix/1000).toFixed(2)} ק"ג)`;
+      document.getElementById('res-powder-all').innerText = `${totalPowder} גרם`;
+      document.getElementById('res-liquid-all').innerText = `${totalLiquid} גרם`;
+      document.getElementById('lbl-liquid-all').innerText = `סך כל ה${mat.liquid}`;
+
+      // Package recommendation
+      const recBox = document.getElementById('box-recommendation');
+      const rec = recommendPackage(totalPowder / 1000, mat.packs);
+      if (rec) {
+        recBox.innerHTML = `
+          <div class="flex items-center justify-between text-white font-bold">
+            <span>📦 המלצת רכישה: ${rec.count} × אריזת ${rec.packSize} ק"ג</span>
+            <span class="text-amber-400 font-rubik text-base">₪${rec.cost}</span>
+          </div>
+          <span class="text-xs text-slate-400 block mt-1">מספק ${rec.cover} ק"ג סה"כ (דרוש: ${(totalPowder/1000).toFixed(2)} ק"ג).</span>
+        `;
+        recBox.classList.remove('hidden');
+      } else {
+        recBox.classList.add('hidden');
+      }
+
+      // Tips List
+      const tipsList = document.getElementById('tips-list');
+      tipsList.innerHTML = mat.tips.map((tip, i) => `
+        <li class="flex items-start gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-teal-500/20 text-teal-300 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">${i+1}</span>
+          <span>${tip}</span>
+        </li>
+      `).join('');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function copyRecipe() {
+      const matKey = document.getElementById('sel-material').value;
+      const mat = MATERIALS[matKey];
+      const moldWater = currentMode === 'water' ? document.getElementById('inp-water').value : calcVolumeFromDimensions();
+      const pOne = document.getElementById('res-powder-one').innerText;
+      const lOne = document.getElementById('res-liquid-one').innerText;
+      const tOne = document.getElementById('res-total-one').innerText;
+      const tAll = document.getElementById('res-total-all').innerText;
+
+      const text = `מתכון גרייש (Grayish) ליציקה מושלמת:
+חומר: ${mat.label}
+יחס: 1 ${mat.liquid} ל-${mat.y} אבקה
+מים בתבנית: ${moldWater} גרם (סמ"ק)
+
+לשקילת תבנית אחת:
+• אבקה: ${pOne}
+• ${mat.liquid}: ${lOne}
+• סה"כ: ${tOne}
+
+סך הכל עבור ${unitsCount} תבניות: ${tAll}`;
+
+      navigator.clipboard?.writeText(text).then(() => {
+        alert('המתכון הועתק בהצלחה ללוח!');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      runCalc();
     });
   </script>
 </body>
