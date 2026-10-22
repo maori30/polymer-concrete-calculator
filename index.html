@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>מחשבון גרייש Pro Max — ריבוי תבניות</title>
+  <title>מחשבון גרייש Pro Max — Liquid Glass Edition</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,13 +31,7 @@
 
   <style>
     :root {
-      --apple-bg: #090d16;
-      --apple-glass-bg: rgba(18, 26, 43, 0.88);
-      --apple-glass-subtle: rgba(26, 38, 62, 0.7);
-      --apple-glass-border: rgba(255, 255, 255, 0.12);
-      --apple-glass-border-light: rgba(255, 255, 255, 0.22);
-      --apple-glass-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
-      --apple-glass-inset: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.18);
+      --bg-dark: #06090f;
     }
 
     html {
@@ -47,132 +41,204 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Heebo', system-ui, sans-serif;
-      background-color: var(--apple-bg);
+      background-color: var(--bg-dark);
       color: #f1f5f9;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       padding: 12px;
-      padding-bottom: env(safe-area-inset-bottom, 24px);
+      padding-bottom: env(safe-area-inset-bottom, 28px);
     }
 
     .font-rubik {
       font-family: 'Rubik', -apple-system, sans-serif;
     }
 
-    /* Apple Luminous Mesh Background */
-    .apple-mesh-bg {
+    /* Ambient Liquid Mesh - Softer, smoother, pleasant to the eye */
+    .liquid-mesh-bg {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
       background: 
-        radial-gradient(at 15% 15%, rgba(13, 148, 136, 0.3) 0px, transparent 55%),
-        radial-gradient(at 85% 20%, rgba(2, 132, 199, 0.25) 0px, transparent 55%),
-        radial-gradient(at 50% 85%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
-        #090d16;
+        radial-gradient(ellipse 65% 50% at 20% 12%, rgba(20, 184, 166, 0.28) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 45% at 85% 22%, rgba(56, 189, 248, 0.22) 0%, transparent 65%),
+        radial-gradient(circle at 50% 55%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.12) 0%, transparent 55%),
+        radial-gradient(circle at 12% 88%, rgba(16, 185, 129, 0.15) 0%, transparent 55%),
+        #06090f;
     }
 
-    /* Apple Glass Card */
-    .apple-glass {
-      background: var(--apple-glass-bg);
-      backdrop-filter: blur(36px) saturate(210%);
-      -webkit-backdrop-filter: blur(36px) saturate(210%);
-      border: 1.5px solid var(--apple-glass-border);
-      border-top: 2px solid var(--apple-glass-border-light);
-      box-shadow: var(--apple-glass-shadow), var(--apple-glass-inset);
-      border-radius: 1.75rem;
+    /* Primary Liquid Glass Surface */
+    .liquid-glass {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(13, 20, 36, 0.72);
+      backdrop-filter: blur(48px) saturate(220%);
+      -webkit-backdrop-filter: blur(48px) saturate(220%);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.35);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 
+        0 24px 55px -12px rgba(0, 0, 0, 0.65),
+        0 8px 20px -4px rgba(0, 0, 0, 0.35),
+        inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -1px 2px 0 rgba(0, 0, 0, 0.35);
+      border-radius: 2rem;
     }
 
-    .apple-glass-subtle {
-      background: var(--apple-glass-subtle);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid var(--apple-glass-border);
-      box-shadow: var(--apple-glass-inset);
+    /* Secondary Liquid Glass Surface (Cards / Rows) */
+    .liquid-glass-subtle {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%), rgba(19, 29, 52, 0.62);
+      backdrop-filter: blur(32px) saturate(200%);
+      -webkit-backdrop-filter: blur(32px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 
+        0 8px 24px -4px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.16);
+      border-radius: 1.4rem;
+    }
+
+    /* Liquid Metric Pod - Mint / Teal */
+    .liquid-pod-teal {
+      background: linear-gradient(135deg, rgba(20, 184, 166, 0.18) 0%, rgba(6, 182, 212, 0.06) 100%), rgba(13, 26, 42, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(45, 212, 191, 0.32);
+      border-top: 1.5px solid rgba(94, 234, 212, 0.55);
+      box-shadow: 
+        0 12px 28px -6px rgba(13, 148, 136, 0.25),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.28);
       border-radius: 1.25rem;
     }
 
-    /* Inputs & Select */
-    .apple-input {
-      background: rgba(15, 23, 42, 0.95);
-      border: 2px solid rgba(51, 65, 85, 0.85);
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+    /* Liquid Metric Pod - Amber */
+    .liquid-pod-amber {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(234, 88, 12, 0.06) 100%), rgba(30, 23, 28, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(251, 191, 36, 0.32);
+      border-top: 1.5px solid rgba(253, 224, 71, 0.55);
+      box-shadow: 
+        0 12px 28px -6px rgba(245, 158, 11, 0.22),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.28);
+      border-radius: 1.25rem;
+    }
+
+    /* Liquid Glass Input */
+    .liquid-input {
+      background: rgba(9, 15, 28, 0.82);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 
+        inset 0 2px 6px rgba(0, 0, 0, 0.5),
+        0 4px 14px rgba(0, 0, 0, 0.2);
       border-radius: 1.25rem;
       color: #ffffff;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .apple-input:focus {
-      border-color: #14b8a6;
+    .liquid-input:focus {
+      border-color: #2dd4bf;
+      box-shadow: 
+        0 0 0 4px rgba(45, 212, 191, 0.22),
+        0 10px 25px -4px rgba(45, 212, 191, 0.28),
+        inset 0 2px 4px rgba(0, 0, 0, 0.4);
       outline: none;
-      box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.25);
     }
 
-    .apple-select {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2314b8a6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-      background-position: left 1rem center;
+    /* Liquid Glass Dropdown */
+    .liquid-select {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(11, 18, 33, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1.5px solid rgba(255, 255, 255, 0.13);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 
+        0 6px 18px rgba(0, 0, 0, 0.35),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.2);
+      border-radius: 1.25rem;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%232dd4bf' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: left 1.1rem center;
       background-repeat: no-repeat;
-      background-size: 1.5em 1.5em;
-      padding-left: 2.75rem;
+      background-size: 1.4em 1.4em;
+      padding-left: 2.85rem;
       appearance: none;
       -webkit-appearance: none;
+      color: #ffffff;
+      transition: all 0.25s ease;
     }
 
-    /* Metric Glass Box */
-    .apple-metric-box {
-      background: rgba(22, 33, 54, 0.9);
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
-      border-top: 2px solid rgba(255, 255, 255, 0.22);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
-      border-radius: 1.25rem;
+    .liquid-select:focus {
+      border-color: #2dd4bf;
+      box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.22), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+      outline: none;
     }
 
-    .apple-btn-primary {
-      background: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%);
+    /* Liquid Glass Primary Button */
+    .liquid-btn-primary {
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.95) 0%, rgba(6, 182, 212, 0.85) 100%);
+      backdrop-filter: blur(16px);
       color: #ffffff;
       border-radius: 1.25rem;
-      box-shadow: 0 8px 24px -4px rgba(13, 148, 136, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 
+        0 12px 28px -6px rgba(13, 148, 136, 0.45),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.4);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .apple-btn-primary:active {
+    .liquid-btn-primary:active {
       transform: scale(0.98);
+      box-shadow: 0 6px 16px -4px rgba(13, 148, 136, 0.4);
+    }
+
+    /* Liquid Pill Badge */
+    .liquid-pill {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18);
     }
   </style>
 </head>
 <body class="antialiased">
 
-  <!-- Apple Luminous Mesh Background -->
-  <div class="apple-mesh-bg"></div>
+  <!-- Ambient Liquid Mesh Background -->
+  <div class="liquid-mesh-bg"></div>
 
   <!-- Main Container: Centered, Perfect for iPhone Pro Max (Max width 560px) -->
   <div class="relative z-10 max-w-xl mx-auto space-y-4 pt-1 sm:pt-4">
 
-    <!-- Header Card -->
-    <header class="apple-glass p-5 sm:p-6 shadow-xl">
+    <!-- Header: Floating Liquid Glass Bar -->
+    <header class="liquid-glass p-5 sm:p-6">
       <div class="flex items-center justify-between">
         
         <div class="flex items-center gap-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-500 via-teal-400 to-cyan-300 flex items-center justify-center text-white font-black text-2xl shadow-md shadow-teal-500/30 border border-white/60 flex-shrink-0">
-            G
+          <!-- Logo Icon with Glass Gem Sheen -->
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-500 via-teal-400 to-cyan-300 flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-teal-500/30 border border-white/60 flex-shrink-0 relative overflow-hidden">
+            <span class="relative z-10">G</span>
+            <div class="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 pointer-events-none"></div>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white">
+              <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white drop-shadow-sm">
                 מחשבון גרייש
               </h1>
-              <span class="text-xs font-black bg-teal-950/80 text-teal-300 px-2.5 py-0.5 rounded-full border border-teal-700/60 shadow-sm">
+              <span class="text-xs font-black bg-teal-500/15 text-teal-300 px-2.5 py-0.5 rounded-full border border-teal-400/40 shadow-sm backdrop-blur-md">
                 Pro Max
               </span>
             </div>
-            <p class="text-xs sm:text-sm text-slate-300 font-medium">יחסים מדויקים והנחיות מניעת שבירה מבית גרייש</p>
+            <p class="text-xs sm:text-sm text-slate-300 font-medium mt-0.5">יחסים מדויקים והנחיות מניעת שבירה מבית גרייש</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2">
-          <span id="header-ratio-badge" class="text-xs sm:text-sm font-black text-teal-300 bg-teal-950/80 px-3 py-1.5 rounded-full border border-teal-700/60 shadow-sm">
+          <span id="header-ratio-badge" class="liquid-pill text-xs sm:text-sm font-black text-teal-300 px-3 py-1.5 rounded-full shadow-sm">
             יחס 3:1
           </span>
         </div>
@@ -180,16 +246,16 @@
       </div>
     </header>
 
-    <!-- Main Calculator Form Card -->
-    <main class="apple-glass p-5 sm:p-7 space-y-5 shadow-2xl">
+    <!-- Main Calculator Form: Liquid Glass Plaque -->
+    <main class="liquid-glass p-5 sm:p-7 space-y-5">
 
-      <!-- 1. בחירת חומר של גרייש (רשימת בחירה מותאמת לאייפון) -->
+      <!-- 1. בחירת חומר של גרייש (Liquid Dropdown) -->
       <div class="space-y-2">
         <label class="block text-base sm:text-lg font-black text-white">
           1. בחירת חומר של גרייש:
         </label>
         <div class="relative">
-          <select id="sel-material" onchange="runCalc()" class="apple-input apple-select w-full p-4 rounded-2xl text-white font-bold text-sm sm:text-base cursor-pointer">
+          <select id="sel-material" onchange="runCalc()" class="liquid-select w-full p-4 font-bold text-sm sm:text-base cursor-pointer">
             <option value="WHITE" selected>שלג פולימרי פרו (Snow Pro) — יחס 3:1</option>
             <option value="SNOW100">שלג 100% לבן (Pure White) — יחס 3.2:1</option>
             <option value="GYSMO">GYSMO PRO (גיסמו פרו) — יחס 3.3:1</option>
@@ -203,34 +269,34 @@
         </div>
       </div>
 
-      <!-- 2. תבניות ליציקה (הוספת תבניות שונות עם כמות מים נפרדת לכל אחת) -->
-      <div class="space-y-3 pt-3 border-t border-slate-700/60">
+      <!-- 2. תבניות ליציקה (כרטיסי זכוכית נוזלית) -->
+      <div class="space-y-3 pt-3 border-t border-white/10">
         
         <div class="flex items-center justify-between">
           <div>
             <label class="block text-base sm:text-lg font-black text-white">
               2. תבניות ליציקה זו:
             </label>
-            <span class="text-xs text-slate-400 font-medium">הזינו את כמות המים שנכנסת לכל תבנית</span>
+            <span class="text-xs text-slate-300 font-medium">הזינו את כמות המים שנכנסת לכל תבנית</span>
           </div>
-          <span id="molds-count-badge" class="text-xs font-black bg-slate-800 text-teal-300 px-2.5 py-1 rounded-lg border border-slate-700">
+          <span id="molds-count-badge" class="liquid-pill text-xs font-black text-teal-300 px-3 py-1 rounded-xl">
             תבנית אחת
           </span>
         </div>
 
-        <!-- רשימת התבניות הדינמית -->
+        <!-- רשימת התבניות הדינמית (Liquid Glass Tiles) -->
         <div id="molds-container" class="space-y-3">
           <!-- מיוצר באופן דינמי דרך JS -->
         </div>
 
-        <!-- כפתור הוספת תבנית נוספת -->
-        <button type="button" onclick="addMold()" class="w-full py-3.5 px-4 rounded-2xl bg-teal-950/50 hover:bg-teal-900/50 border-2 border-dashed border-teal-500/50 text-teal-300 font-black text-sm sm:text-base flex items-center justify-center gap-2 transition active:scale-98 shadow-sm">
+        <!-- כפתור הוספת תבנית נוספת: זכוכית מעוצבת -->
+        <button type="button" onclick="addMold()" class="w-full py-3.5 px-4 rounded-2xl bg-teal-500/10 hover:bg-teal-500/20 border-2 border-dashed border-teal-400/40 text-teal-300 font-black text-sm sm:text-base flex items-center justify-center gap-2 transition active:scale-98 shadow-sm backdrop-blur-md">
           <i data-lucide="plus-circle" class="w-5 h-5 text-teal-400"></i>
           <span>+ הוסף תבנית נוספת ליציקה</span>
         </button>
 
-        <!-- טיפ שקילה לפי גרייש -->
-        <div class="apple-glass-subtle p-3.5 text-xs sm:text-sm text-slate-300 flex items-start gap-2.5 leading-relaxed">
+        <!-- טיפ שקילה עדין -->
+        <div class="liquid-glass-subtle p-3.5 text-xs sm:text-sm text-slate-300 flex items-start gap-2.5 leading-relaxed">
           <i data-lucide="info" class="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5"></i>
           <div>
             <strong>איך שוקלים לפי גרייש?</strong> מאפסים משקל דיגיטלי (Tare) עם התבנית הריקה, ממלאים מים עד שפת התבנית ושוקלים. 1 גרם מים = 1 סמ"ק במדויק.
@@ -239,12 +305,15 @@
 
       </div>
 
-      <!-- 3. כרטיס מתכון שקילה מוכן לעבודה (תוצאות מפורטות לכל תבנית וסה"כ) -->
-      <div class="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-teal-950/60 via-slate-900/90 to-slate-900 border border-teal-500/40 shadow-xl space-y-4">
+      <!-- 3. מתכון שקילה מוכן לעבודה (כרטיס זכוכית נוזלית מואר) -->
+      <div class="p-4 sm:p-6 rounded-3xl bg-gradient-to-br from-teal-500/15 via-slate-900/80 to-slate-900/90 border border-teal-400/40 shadow-2xl space-y-4 relative overflow-hidden backdrop-blur-2xl">
         
-        <div class="flex items-center justify-between pb-3 border-b border-teal-800/40 text-xs sm:text-sm">
+        <!-- Subtle Specular Reflection Line -->
+        <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-300/40 to-transparent"></div>
+
+        <div class="flex items-center justify-between pb-3 border-b border-white/10 text-xs sm:text-sm">
           <span class="font-black text-teal-300" id="res-ratio-desc">יחס רשמי: 1 חלק מים ל-3 אבקה</span>
-          <span class="font-bold text-slate-400" id="res-total-water-echo">265 גרם מים סה"כ</span>
+          <span class="font-bold text-slate-300" id="res-total-water-echo">0 גרם מים סה"כ</span>
         </div>
 
         <!-- פירוט עבור כל תבנית בנפרד -->
@@ -259,41 +328,41 @@
           </div>
         </div>
 
-        <!-- סה"כ לפרויקט כולו (שקילה משותפת בקערת הערבוב) -->
-        <div class="pt-3.5 border-t border-teal-800/40 space-y-2.5">
+        <!-- סה"כ לפרויקט כולו (קערת הערבוב) -->
+        <div class="pt-3.5 border-t border-white/10 space-y-2.5">
           <div class="flex justify-between items-center text-xs sm:text-sm font-black text-teal-200">
             <span>סה"כ להכנה בקערת הערבוב (לכל היציקה):</span>
-            <span class="font-rubik text-teal-300 font-black" id="res-total-all-mix">636 גרם (0.64 ק"ג)</span>
+            <span class="font-rubik text-teal-300 font-black" id="res-total-all-mix">0 גרם (0 ק"ג)</span>
           </div>
 
           <div class="grid grid-cols-2 gap-3 text-right">
-            <!-- סך כל האבקה -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-900/95 border border-teal-500/60 shadow-md">
+            <!-- סך כל האבקה (Liquid Pod Teal) -->
+            <div class="liquid-pod-teal p-3.5 sm:p-4">
               <div class="flex items-center gap-1.5 mb-1">
-                <span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
-                <span class="text-xs sm:text-sm font-bold text-slate-300">סך כל האבקה</span>
+                <span class="w-2.5 h-2.5 rounded-full bg-teal-400 shadow-sm shadow-teal-400/50"></span>
+                <span class="text-xs sm:text-sm font-bold text-slate-200">סך כל האבקה</span>
               </div>
-              <div class="text-2xl sm:text-3xl font-black text-teal-300 font-rubik" id="res-total-powder">477 גרם</div>
-              <span class="text-xs text-slate-400 font-medium">שקילה ראשונה לקערה</span>
+              <div class="text-2xl sm:text-3xl font-black text-teal-200 font-rubik drop-shadow-sm" id="res-total-powder">0 גרם</div>
+              <span class="text-xs text-teal-300/70 font-medium">שקילה ראשונה לקערה</span>
             </div>
 
-            <!-- סך כל המים/נוזל -->
-            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-900/95 border border-amber-500/60 shadow-md">
+            <!-- סך כל המים/נוזל (Liquid Pod Amber) -->
+            <div class="liquid-pod-amber p-3.5 sm:p-4">
               <div class="flex items-center gap-1.5 mb-1">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                <span class="text-xs sm:text-sm font-bold text-slate-300" id="lbl-total-liquid">סך כל המים</span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50"></span>
+                <span class="text-xs sm:text-sm font-bold text-slate-200" id="lbl-total-liquid">סך כל המים</span>
               </div>
-              <div class="text-2xl sm:text-3xl font-black text-amber-300 font-rubik" id="res-total-liquid">159 גרם</div>
-              <span class="text-xs text-slate-400 font-medium">שוקלים תחילה לקערה</span>
+              <div class="text-2xl sm:text-3xl font-black text-amber-200 font-rubik drop-shadow-sm" id="res-total-liquid">0 גרם</div>
+              <span class="text-xs text-amber-300/70 font-medium">שוקלים תחילה לקערה</span>
             </div>
           </div>
         </div>
 
         <!-- Packaging Recommendation -->
-        <div id="box-recommendation" class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700 text-xs sm:text-sm"></div>
+        <div id="box-recommendation" class="liquid-glass-subtle p-3.5 text-xs sm:text-sm hidden"></div>
 
-        <!-- Action Button: Copy -->
-        <button type="button" onclick="copyRecipe()" class="apple-btn-primary w-full py-3.5 px-4 font-black text-base flex items-center justify-center gap-2 transition shadow-lg">
+        <!-- Action Button: Copy with Liquid Gloss Sheen -->
+        <button type="button" onclick="copyRecipe()" class="liquid-btn-primary w-full py-3.5 px-4 font-black text-base flex items-center justify-center gap-2 transition shadow-lg">
           <i data-lucide="copy" class="w-5 h-5"></i>
           <span>העתק מתכון שקילה מלא ללוח</span>
         </button>
@@ -301,7 +370,7 @@
       </div>
 
       <!-- 4. 4 כללי הברזל של גרייש למניעת שבירה -->
-      <div class="apple-glass-subtle p-4 sm:p-5 space-y-3 border-teal-700/40">
+      <div class="liquid-glass-subtle p-4 sm:p-5 space-y-3 border-teal-400/30">
         <div class="flex items-center gap-2 text-teal-300 font-black text-sm sm:text-base">
           <i data-lucide="shield-check" class="w-5 h-5 text-teal-400 flex-shrink-0"></i>
           <span>4 כללי הברזל של גרייש למניעת שבירה וסדקים:</span>
@@ -314,7 +383,7 @@
     </main>
 
     <footer class="text-center text-xs text-slate-500 py-3">
-      <p>מחשבון גרייש Pro Max • מותאם לאייפון • נתונים רשמיים grayish.co.il</p>
+      <p>מחשבון גרייש Pro Max • עיצוב Liquid Glass • נתונים רשמיים grayish.co.il</p>
     </footer>
 
   </div>
@@ -445,7 +514,7 @@
       }
     };
 
-    // רשימת התבניות הפעילה (ברירת מחדל: תבנית ראשונה ריקה להזנה ישירה וחלקה)
+    // רשימת התבניות הפעילה (ברירת מחדל: תבנית ראשונה ריקה להזנה ישירה)
     let molds = [
       { id: 1, water: '' }
     ];
@@ -455,10 +524,10 @@
       if (!container) return;
 
       container.innerHTML = molds.map((m, idx) => `
-        <div class="apple-glass-subtle p-3.5 sm:p-4 rounded-2xl border border-slate-700/80 space-y-2">
+        <div class="liquid-glass-subtle p-3.5 sm:p-4 space-y-2">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <span class="w-6 h-6 rounded-lg bg-teal-500/20 text-teal-300 font-black text-xs flex items-center justify-center font-rubik">${idx + 1}</span>
+              <span class="w-6 h-6 rounded-lg bg-teal-400/20 text-teal-300 font-black text-xs flex items-center justify-center font-rubik border border-teal-400/30">${idx + 1}</span>
               <span class="font-black text-sm sm:text-base text-white">תבנית ${idx + 1}</span>
             </div>
             ${molds.length > 1 ? `
@@ -477,7 +546,7 @@
                    max="10000" 
                    inputmode="numeric"
                    oninput="updateMoldWater(${idx}, this.value)" 
-                   class="apple-input w-full px-4 py-3 sm:py-3.5 text-2xl sm:text-3xl font-black font-rubik text-teal-300 text-left pl-24 placeholder:text-slate-600 placeholder:text-base placeholder:font-normal" 
+                   class="liquid-input w-full px-4 py-3 sm:py-3.5 text-2xl sm:text-3xl font-black font-rubik text-teal-300 text-left pl-24 placeholder:text-slate-500 placeholder:text-base placeholder:font-normal" 
                    dir="ltr">
             <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs sm:text-sm font-bold text-slate-400 pointer-events-none">
               גרם מים
@@ -497,7 +566,6 @@
 
     function addMold() {
       const nextId = molds.length ? Math.max(...molds.map(m => m.id)) + 1 : 1;
-      // שדה ריק להזנה מיידית
       molds.push({ id: nextId, water: '' });
       renderMoldsInputs();
       runCalc();
@@ -579,25 +647,25 @@
 
       // Results Text
       document.getElementById('res-ratio-desc').innerText = `יחס רשמי: 1 חלק ${mat.liquid} ל-${mat.y} אבקה`;
-      document.getElementById('res-total-water-echo').innerText = `${totalWater} גרם מים סה"כ (${molds.length} תבניות)`;
+      document.getElementById('res-total-water-echo').innerText = `${totalWater} גרם מים סה"כ (${molds.length === 1 ? 'תבנית אחת' : molds.length + ' תבניות'})`;
 
-      // הצגת פירוט עבור כל תבנית
+      // הצגת פירוט עבור כל תבנית (Liquid Metric Box)
       const resultsContainer = document.getElementById('molds-results-list');
       if (resultsContainer) {
         resultsContainer.innerHTML = calculatedMolds.map(m => `
-          <div class="apple-metric-box p-3 sm:p-3.5 space-y-2">
+          <div class="liquid-glass-subtle p-3 sm:p-3.5 space-y-2">
             <div class="flex items-center justify-between text-xs sm:text-sm">
-              <span class="font-black text-white">תבנית ${m.num} ${m.water > 0 ? `(${m.water} גרם מים)` : '<span class="text-slate-500 font-normal">(טרם הוזן משקל)</span>'}:</span>
-              <span class="font-rubik font-black text-teal-400">סה"כ: ${m.total} גרם</span>
+              <span class="font-black text-white">תבנית ${m.num} ${m.water > 0 ? `(${m.water} גרם מים)` : '<span class="text-slate-400 font-normal">(טרם הוזן משקל)</span>'}:</span>
+              <span class="font-rubik font-black text-teal-300">סה"כ: ${m.total} גרם</span>
             </div>
             
             <div class="grid grid-cols-2 gap-2 text-right">
-              <div class="p-2 sm:p-2.5 rounded-xl bg-teal-950/60 border border-teal-800/60">
+              <div class="p-2 sm:p-2.5 rounded-xl bg-teal-500/10 border border-teal-400/30">
                 <span class="text-xs font-bold text-teal-300 block mb-0.5">אבקה</span>
                 <div class="text-lg sm:text-xl font-black text-teal-200 font-rubik">${m.powder} גרם</div>
               </div>
 
-              <div class="p-2 sm:p-2.5 rounded-xl bg-amber-950/60 border border-amber-800/60">
+              <div class="p-2 sm:p-2.5 rounded-xl bg-amber-500/10 border border-amber-400/30">
                 <span class="text-xs font-bold text-amber-300 block mb-0.5">${mat.liquid}</span>
                 <div class="text-lg sm:text-xl font-black text-amber-200 font-rubik">${m.liquid} גרם</div>
               </div>
@@ -621,7 +689,7 @@
             <span>📦 המלצת רכישה: ${rec.count} × אריזת ${rec.packSize} ק"ג</span>
             <span class="text-amber-400 font-rubik text-base">₪${rec.cost}</span>
           </div>
-          <span class="text-xs text-slate-400 block mt-1">מספק ${rec.cover} ק"ג סה"כ (דרוש: ${(totalPowder/1000).toFixed(2)} ק"ג אבקה).</span>
+          <span class="text-xs text-slate-300 block mt-1">מספק ${rec.cover} ק"ג סה"כ (דרוש: ${(totalPowder/1000).toFixed(2)} ק"ג אבקה).</span>
         `;
         recBox.classList.remove('hidden');
       } else {
@@ -632,7 +700,7 @@
       const tipsList = document.getElementById('tips-list');
       tipsList.innerHTML = mat.tips.map((tip, i) => `
         <li class="flex items-start gap-2.5">
-          <span class="w-5 h-5 rounded-full bg-teal-500/20 text-teal-300 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">${i+1}</span>
+          <span class="w-5 h-5 rounded-full bg-teal-400/20 text-teal-300 border border-teal-400/40 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">${i+1}</span>
           <span>${tip}</span>
         </li>
       `).join('');
