@@ -571,6 +571,16 @@
   </div>
 
   <script>
+    function safeCreateIcons() {
+      try {
+        if (typeof window !== 'undefined' && window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+      } catch (err) {
+        console.warn('Lucide icon error:', err);
+      }
+    }
+
     // מאגר חומרי גרייש הרשמי ומדויק
     const MATERIALS = {
       WHITE: { label: "שלג פולימרי פרו (Snow Pro)", shortRatio: "3:1", x: 0.60, y: 3.0, basis: "powder", liquid: "מים", packs: [[1.5, 74], [3, 139], [6, 264], [9, 378], [18, 725], [27, 1045], [36, 1345], [54, 2015], [72, 2680], [128, 4377]], tips: ["שקלו תמיד את המים תחילה לקערת הערבוב, ואז שפכו את האבקה בהדרגה למים.", "יחס מדויק של גרייש: על כל 100 גרם מים - 300 גרם אבקה. אל תוסיפו מים מעבר לכך!", "לתוצאה דחוסה ומבריקה במיוחד (וחיזוק נוסף נגד שבירה), ניתן לעבוד ביחס 3.5:1 (פחות מים).", "זמן שליפה מהתבנית: מומלץ להמתין לפחות 35–45 דקות עד שהיציקה התקררה לגמרי מהחום שלה.", "ייבוש מלא: החומר מגיע לחוזק אבן סופי לאחר 24–48 שעות ייבוש באוויר הפתוח."] },
@@ -663,7 +673,7 @@
       } else {
         runCalc();
       }
-      if (window.lucide) lucide.createIcons();
+      safeCreateIcons();
     }
 
     // ─── חישובי עזר לתבניות וסטים ───
@@ -777,7 +787,7 @@
         btnLabel.innerText = newMoldParts.length > 1 ? `שמור סט (${newMoldParts.length} תבניות) באתר` : 'שמור תבנית זו באתר';
       }
 
-      if (window.lucide) lucide.createIcons();
+      safeCreateIcons();
     }
 
     function addNewMoldPart() {
@@ -919,7 +929,7 @@
             <p class="text-xs text-slate-500">השתמש בטופס שלמעלה כדי לשמור את התבניות האישיות שלך!</p>
           </div>
         `;
-        if (window.lucide) lucide.createIcons();
+        safeCreateIcons();
         return;
       }
 
@@ -985,7 +995,7 @@
         `;
       }).join('');
 
-      if (window.lucide) lucide.createIcons();
+      safeCreateIcons();
     }
 
     // טעינת תבנית או סט תבניות ישירות לתוך המחשבון
@@ -1038,7 +1048,7 @@
       }).join('');
 
       modal.classList.remove('hidden');
-      if (window.lucide) lucide.createIcons();
+      safeCreateIcons();
     }
 
     function closeSavedPickerModal() {
@@ -1074,9 +1084,6 @@
       }
 
       closeSavedPickerModal();
-      renderMoldsInputs();
-      runCalc();
-    }
       renderMoldsInputs();
       runCalc();
     }
@@ -1124,7 +1131,7 @@
         badge.innerText = activeMolds.length === 1 ? 'תבנית אחת' : `${activeMolds.length} תבניות`;
       }
 
-      if (window.lucide) lucide.createIcons();
+      safeCreateIcons();
     }
 
     function addEmptyMold() {
@@ -1268,7 +1275,7 @@
         </li>
       `).join('');
 
-      if (window.lucide) lucide.createIcons();
+      safeCreateIcons();
     }
 
     function copyRecipe() {
