@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>מחשבון גרייש Pro Max — רשמי ומותאם לאייפון</title>
+  <title>מחשבון גרייש Pro Max — ריבוי תבניות</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -120,26 +120,6 @@
       -webkit-appearance: none;
     }
 
-    /* Segmented Control */
-    .apple-segmented-container {
-      background: rgba(30, 41, 59, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 1.25rem;
-      padding: 4px;
-    }
-
-    .apple-segmented-btn {
-      border-radius: 0.95rem;
-      font-weight: 700;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .apple-segmented-btn.active {
-      background: #0d9488;
-      color: #ffffff !important;
-      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.45);
-    }
-
     /* Metric Glass Box */
     .apple-metric-box {
       background: rgba(22, 33, 54, 0.9);
@@ -147,22 +127,6 @@
       border-top: 2px solid rgba(255, 255, 255, 0.22);
       box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
       border-radius: 1.25rem;
-    }
-
-    /* Stepper buttons */
-    .apple-btn-step {
-      background: rgba(30, 41, 59, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 0.85rem;
-      color: #f1f5f9;
-      font-weight: 800;
-      transition: all 0.15s ease;
-      touch-action: manipulation;
-    }
-
-    .apple-btn-step:active {
-      transform: scale(0.94);
-      background: rgba(45, 60, 88, 1);
     }
 
     .apple-btn-primary {
@@ -239,142 +203,88 @@
         </div>
       </div>
 
-      <!-- 2. מדידת התבנית / שקילת מים -->
-      <div class="space-y-3 pt-2 border-t border-slate-700/60">
+      <!-- 2. תבניות ליציקה (הוספת תבניות שונות עם כמות מים נפרדת לכל אחת) -->
+      <div class="space-y-3 pt-3 border-t border-slate-700/60">
         
         <div class="flex items-center justify-between">
-          <label class="block text-base sm:text-lg font-black text-white">
-            2. גרם מים שנכנסו לתבנית:
-          </label>
-
-          <!-- Toggle: שקילה מול מידות -->
-          <div class="apple-segmented-container flex items-center text-xs">
-            <button type="button" id="tab-water" onclick="switchMode('water')" class="apple-segmented-btn active px-3 py-1.5 font-bold">
-              💧 שקילת מים
-            </button>
-            <button type="button" id="tab-dims" onclick="switchMode('dims')" class="apple-segmented-btn px-3 py-1.5 font-bold text-slate-400">
-              📐 מידות ס"מ
-            </button>
+          <div>
+            <label class="block text-base sm:text-lg font-black text-white">
+              2. תבניות ליציקה זו:
+            </label>
+            <span class="text-xs text-slate-400 font-medium">הזינו את כמות המים שנכנסת לכל תבנית</span>
           </div>
+          <span id="molds-count-badge" class="text-xs font-black bg-slate-800 text-teal-300 px-2.5 py-1 rounded-lg border border-slate-700">
+            תבנית אחת
+          </span>
         </div>
 
-        <!-- Mode Water Input (Full Width - No Steppers to Avoid Truncation) -->
-        <div id="mode-water-box" class="space-y-3">
-          <div class="relative w-full">
-            <input type="number" id="inp-water" value="265" min="1" max="10000" oninput="runCalc()" class="apple-input w-full px-5 py-4 text-3xl sm:text-4xl font-black font-rubik text-teal-300 text-left pl-28 sm:pl-32" dir="ltr">
-            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-sm sm:text-base font-bold text-slate-400 pointer-events-none">
-              גרם מים
-            </span>
-          </div>
-
-          <!-- Grayish Tip -->
-          <div class="apple-glass-subtle p-3.5 text-xs sm:text-sm text-slate-300 flex items-start gap-2.5 leading-relaxed">
-            <i data-lucide="info" class="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5"></i>
-            <div>
-              <strong>איך שוקלים לפי גרייש?</strong> מאפסים משקל דיגיטלי (Tare) עם התבנית הריקה, ממלאים מים עד שפת התבנית ושוקלים. 1 גרם מים = 1 סמ"ק במדויק.
-            </div>
-          </div>
+        <!-- רשימת התבניות הדינמית -->
+        <div id="molds-container" class="space-y-3">
+          <!-- מיוצר באופן דינמי דרך JS -->
         </div>
 
-        <!-- Mode Dimensions Box -->
-        <div id="mode-dims-box" class="hidden space-y-3">
-          <div class="grid grid-cols-3 gap-2">
-            <button type="button" onclick="setShape('oval')" id="shape-oval" class="apple-glass-subtle p-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-1 rounded-xl bg-teal-950/70 border-teal-500 text-teal-300">
-              🥚 מגש אובלי
-            </button>
-            <button type="button" onclick="setShape('rectangle')" id="shape-rectangle" class="apple-glass-subtle p-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-1 rounded-xl text-slate-300">
-              ⬛ מלבן/ריבוע
-            </button>
-            <button type="button" onclick="setShape('circle')" id="shape-circle" class="apple-glass-subtle p-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-1 rounded-xl text-slate-300">
-              ⚪ עיגול
-            </button>
-          </div>
+        <!-- כפתור הוספת תבנית נוספת -->
+        <button type="button" onclick="addMold()" class="w-full py-3.5 px-4 rounded-2xl bg-teal-950/50 hover:bg-teal-900/50 border-2 border-dashed border-teal-500/50 text-teal-300 font-black text-sm sm:text-base flex items-center justify-center gap-2 transition active:scale-98 shadow-sm">
+          <i data-lucide="plus-circle" class="w-5 h-5 text-teal-400"></i>
+          <span>+ הוסף תבנית נוספת ליציקה</span>
+        </button>
 
-          <div id="dims-inputs-grid" class="grid grid-cols-3 gap-2 text-xs sm:text-sm">
-            <div>
-              <label class="block mb-1 font-bold text-slate-300" id="lbl-dim-1">אורך (ס"מ)</label>
-              <input type="number" id="dim-1" value="18" step="0.1" oninput="runCalc()" class="apple-input w-full p-2.5 font-rubik text-left" dir="ltr">
-            </div>
-            <div>
-              <label class="block mb-1 font-bold text-slate-300" id="lbl-dim-2">רוחב (ס"מ)</label>
-              <input type="number" id="dim-2" value="9.5" step="0.1" oninput="runCalc()" class="apple-input w-full p-2.5 font-rubik text-left" dir="ltr">
-            </div>
-            <div id="box-dim-3">
-              <label class="block mb-1 font-bold text-slate-300" id="lbl-dim-3">עומק (ס"מ)</label>
-              <input type="number" id="dim-3" value="1.5" step="0.1" oninput="runCalc()" class="apple-input w-full p-2.5 font-rubik text-left" dir="ltr">
-            </div>
+        <!-- טיפ שקילה לפי גרייש -->
+        <div class="apple-glass-subtle p-3.5 text-xs sm:text-sm text-slate-300 flex items-start gap-2.5 leading-relaxed">
+          <i data-lucide="info" class="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5"></i>
+          <div>
+            <strong>איך שוקלים לפי גרייש?</strong> מאפסים משקל דיגיטלי (Tare) עם התבנית הריקה, ממלאים מים עד שפת התבנית ושוקלים. 1 גרם מים = 1 סמ"ק במדויק.
           </div>
         </div>
 
       </div>
 
-      <!-- 3. כמות תבניות להכנה -->
-      <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80">
-        <div>
-          <span class="text-sm sm:text-base font-black text-white block">כמות תבניות להכנה:</span>
-          <span class="text-xs text-slate-400 font-medium">חישוב כמויות לכל התבניות יחד</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="setUnits(-1)" class="w-10 h-10 rounded-xl bg-slate-700/90 font-black text-xl text-white flex items-center justify-center transition active:scale-95 shadow-sm">-</button>
-          <span id="disp-units" class="w-8 text-center font-black font-rubik text-xl text-white">1</span>
-          <button type="button" onclick="setUnits(1)" class="w-10 h-10 rounded-xl bg-slate-700/90 font-black text-xl text-white flex items-center justify-center transition active:scale-95 shadow-sm">+</button>
-        </div>
-      </div>
-
-      <!-- 4. כרטיס מתכון שקילה מוכן לעבודה (התוצאות) -->
+      <!-- 3. כרטיס מתכון שקילה מוכן לעבודה (תוצאות מפורטות לכל תבנית וסה"כ) -->
       <div class="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-teal-950/60 via-slate-900/90 to-slate-900 border border-teal-500/40 shadow-xl space-y-4">
         
         <div class="flex items-center justify-between pb-3 border-b border-teal-800/40 text-xs sm:text-sm">
           <span class="font-black text-teal-300" id="res-ratio-desc">יחס רשמי: 1 חלק מים ל-3 אבקה</span>
-          <span class="font-bold text-slate-400" id="res-water-echo">265 גרם מים בתבנית</span>
+          <span class="font-bold text-slate-400" id="res-total-water-echo">265 גרם מים סה"כ</span>
         </div>
 
-        <!-- Single Mold Breakdown -->
+        <!-- פירוט עבור כל תבנית בנפרד -->
         <div class="space-y-2">
-          <div class="flex justify-between items-center text-xs sm:text-sm font-bold text-slate-300">
-            <span>שקילה לתבנית אחת:</span>
-            <span class="font-rubik text-teal-400 font-black" id="res-total-one">636 גרם סה"כ לתבנית</span>
+          <div class="flex justify-between items-center text-xs sm:text-sm font-black text-slate-200">
+            <span>פירוט כמויות לכל תבנית:</span>
+            <span class="text-xs text-slate-400 font-medium">לפי משקל מים מדוד</span>
+          </div>
+
+          <div id="molds-results-list" class="space-y-2.5">
+            <!-- מיוצר באופן דינמי דרך JS -->
+          </div>
+        </div>
+
+        <!-- סה"כ לפרויקט כולו (שקילה משותפת בקערת הערבוב) -->
+        <div class="pt-3.5 border-t border-teal-800/40 space-y-2.5">
+          <div class="flex justify-between items-center text-xs sm:text-sm font-black text-teal-200">
+            <span>סה"כ להכנה בקערת הערבוב (לכל היציקה):</span>
+            <span class="font-rubik text-teal-300 font-black" id="res-total-all-mix">636 גרם (0.64 ק"ג)</span>
           </div>
 
           <div class="grid grid-cols-2 gap-3 text-right">
-            <!-- Powder -->
-            <div class="apple-metric-box p-3.5 sm:p-4">
+            <!-- סך כל האבקה -->
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-900/95 border border-teal-500/60 shadow-md">
               <div class="flex items-center gap-1.5 mb-1">
                 <span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
-                <span class="text-xs sm:text-sm font-bold text-slate-300">אבקה נדרשת</span>
+                <span class="text-xs sm:text-sm font-bold text-slate-300">סך כל האבקה</span>
               </div>
-              <div class="text-3xl sm:text-4xl font-black text-teal-300 font-rubik" id="res-powder-one">477 גרם</div>
-              <span class="text-xs text-slate-400 font-medium">לתבנית אחת</span>
+              <div class="text-2xl sm:text-3xl font-black text-teal-300 font-rubik" id="res-total-powder">477 גרם</div>
+              <span class="text-xs text-slate-400 font-medium">שקילה ראשונה לקערה</span>
             </div>
 
-            <!-- Liquid -->
-            <div class="apple-metric-box p-3.5 sm:p-4">
+            <!-- סך כל המים/נוזל -->
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-900/95 border border-amber-500/60 shadow-md">
               <div class="flex items-center gap-1.5 mb-1">
                 <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                <span class="text-xs sm:text-sm font-bold text-slate-300" id="lbl-liquid-one">מים נקיים</span>
+                <span class="text-xs sm:text-sm font-bold text-slate-300" id="lbl-total-liquid">סך כל המים</span>
               </div>
-              <div class="text-3xl sm:text-4xl font-black text-amber-300 font-rubik" id="res-liquid-one">159 גרם</div>
-              <span class="text-xs text-slate-400 font-medium">לתבנית אחת</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Total Project Breakdown (When units >= 1) -->
-        <div id="box-total-project" class="pt-3 border-t border-teal-800/30 space-y-2">
-          <div class="flex justify-between items-center text-xs sm:text-sm font-bold text-slate-300">
-            <span>סך הכל לפרויקט כולו:</span>
-            <span class="font-rubik text-teal-300 font-black" id="res-total-all">636 גרם (0.64 ק"ג)</span>
-          </div>
-
-          <div class="grid grid-cols-2 gap-3 text-right">
-            <div class="p-3 rounded-xl bg-slate-900/90 border border-teal-700/50">
-              <span class="text-xs text-slate-400 font-bold block mb-0.5">סך כל האבקה</span>
-              <div class="text-2xl sm:text-3xl font-black text-teal-300 font-rubik" id="res-powder-all">477 גרם</div>
-            </div>
-
-            <div class="p-3 rounded-xl bg-slate-900/90 border border-amber-700/50">
-              <span class="text-xs text-slate-400 font-bold block mb-0.5" id="lbl-liquid-all">סך כל המים</span>
-              <div class="text-2xl sm:text-3xl font-black text-amber-300 font-rubik" id="res-liquid-all">159 גרם</div>
+              <div class="text-2xl sm:text-3xl font-black text-amber-300 font-rubik" id="res-total-liquid">159 גרם</div>
+              <span class="text-xs text-slate-400 font-medium">שוקלים תחילה לקערה</span>
             </div>
           </div>
         </div>
@@ -385,12 +295,12 @@
         <!-- Action Button: Copy -->
         <button type="button" onclick="copyRecipe()" class="apple-btn-primary w-full py-3.5 px-4 font-black text-base flex items-center justify-center gap-2 transition shadow-lg">
           <i data-lucide="copy" class="w-5 h-5"></i>
-          <span>העתק מתכון שקילה ללוח</span>
+          <span>העתק מתכון שקילה מלא ללוח</span>
         </button>
 
       </div>
 
-      <!-- 5. 4 כללי הברזל של גרייש למניעת שבירה -->
+      <!-- 4. 4 כללי הברזל של גרייש למניעת שבירה -->
       <div class="apple-glass-subtle p-4 sm:p-5 space-y-3 border-teal-700/40">
         <div class="flex items-center gap-2 text-teal-300 font-black text-sm sm:text-base">
           <i data-lucide="shield-check" class="w-5 h-5 text-teal-400 flex-shrink-0"></i>
@@ -495,7 +405,7 @@
         ]
       },
       MIRAGE: {
-        label: "בטון מיראז׳ (אבן אפריקאית)",
+        label: "בטון מיראז׳ (אבן כהה)",
         shortRatio: "3.5:1",
         x: 0.515,
         y: 3.5,
@@ -535,77 +445,67 @@
       }
     };
 
-    let currentMode = 'water'; // 'water' or 'dims'
-    let currentShape = 'oval'; // 'oval', 'rectangle', 'circle'
-    let unitsCount = 1;
+    // רשימת התבניות הפעילה (ברירת מחדל: תבנית ראשונה עם 265 גרם מים)
+    let molds = [
+      { id: 1, water: 265 }
+    ];
 
-    function switchMode(mode) {
-      currentMode = mode;
-      document.getElementById('tab-water').classList.toggle('active', mode === 'water');
-      document.getElementById('tab-dims').classList.toggle('active', mode === 'dims');
-      document.getElementById('tab-water').classList.toggle('text-slate-400', mode !== 'water');
-      document.getElementById('tab-dims').classList.toggle('text-slate-400', mode !== 'dims');
-      
-      document.getElementById('mode-water-box').classList.toggle('hidden', mode !== 'water');
-      document.getElementById('mode-dims-box').classList.toggle('hidden', mode !== 'dims');
-      runCalc();
-    }
+    function renderMoldsInputs() {
+      const container = document.getElementById('molds-container');
+      if (!container) return;
 
-    function setShape(shape) {
-      currentShape = shape;
-      ['oval', 'rectangle', 'circle'].forEach(s => {
-        const btn = document.getElementById(`shape-${s}`);
-        const isActive = s === shape;
-        btn.classList.toggle('bg-teal-950/70', isActive);
-        btn.classList.toggle('border-teal-500', isActive);
-        btn.classList.toggle('text-teal-300', isActive);
-        btn.classList.toggle('text-slate-300', !isActive);
-      });
+      container.innerHTML = molds.map((m, idx) => `
+        <div class="apple-glass-subtle p-3.5 sm:p-4 rounded-2xl border border-slate-700/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-teal-500/20 text-teal-300 font-black text-xs flex items-center justify-center font-rubik">${idx + 1}</span>
+              <span class="font-black text-sm sm:text-base text-white">תבנית ${idx + 1}</span>
+            </div>
+            ${molds.length > 1 ? `
+              <button type="button" onclick="removeMold(${idx})" class="text-rose-400 hover:text-rose-300 p-1 text-xs font-bold flex items-center gap-1 transition active:scale-95" title="הסר תבנית">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <span>הסר</span>
+              </button>
+            ` : ''}
+          </div>
+          
+          <div class="relative w-full">
+            <input type="number" value="${m.water}" min="1" max="10000" oninput="updateMoldWater(${idx}, this.value)" class="apple-input w-full px-4 py-3 sm:py-3.5 text-2xl sm:text-3xl font-black font-rubik text-teal-300 text-left pl-28" dir="ltr">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs sm:text-sm font-bold text-slate-400 pointer-events-none">
+              גרם מים
+            </span>
+          </div>
+        </div>
+      `).join('');
 
-      const lbl1 = document.getElementById('lbl-dim-1');
-      const lbl2 = document.getElementById('lbl-dim-2');
-      const box3 = document.getElementById('box-dim-3');
-
-      if (shape === 'circle') {
-        lbl1.innerText = 'קוטר (ס"מ)';
-        lbl2.innerText = 'עומק (ס"מ)';
-        box3.classList.add('hidden');
-      } else {
-        lbl1.innerText = 'אורך (ס"מ)';
-        lbl2.innerText = 'רוחב (ס"מ)';
-        box3.classList.remove('hidden');
+      // עדכון תגית כמות התבניות
+      const badge = document.getElementById('molds-count-badge');
+      if (badge) {
+        badge.innerText = molds.length === 1 ? 'תבנית אחת' : `${molds.length} תבניות`;
       }
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function addMold() {
+      const nextId = molds.length ? Math.max(...molds.map(m => m.id)) + 1 : 1;
+      // ערך ברירת מחדל נוח (למשל 150 גרם לתבנית נוספת)
+      molds.push({ id: nextId, water: 150 });
+      renderMoldsInputs();
       runCalc();
     }
 
-    function stepWater(delta) {
-      const inp = document.getElementById('inp-water');
-      let val = Math.max(1, (parseFloat(inp.value) || 0) + delta);
-      inp.value = val;
+    function removeMold(index) {
+      if (molds.length <= 1) return;
+      molds.splice(index, 1);
+      renderMoldsInputs();
       runCalc();
     }
 
-    function setUnits(delta) {
-      unitsCount = Math.max(1, unitsCount + delta);
-      document.getElementById('disp-units').innerText = unitsCount;
+    function updateMoldWater(index, val) {
+      const num = Math.max(0, parseFloat(val) || 0);
+      molds[index].water = num;
       runCalc();
-    }
-
-    function calcVolumeFromDimensions() {
-      const v1 = Math.max(0, parseFloat(document.getElementById('dim-1').value) || 0);
-      const v2 = Math.max(0, parseFloat(document.getElementById('dim-2').value) || 0);
-      const v3 = Math.max(0, parseFloat(document.getElementById('dim-3').value) || 0);
-
-      let vol = 0;
-      if (currentShape === 'rectangle') {
-        vol = v1 * v2 * v3;
-      } else if (currentShape === 'circle') {
-        const r = v1 / 2;
-        vol = Math.PI * r * r * v2;
-      } else if (currentShape === 'oval') {
-        vol = Math.PI * (v1 / 2) * (v2 / 2) * v3;
-      }
-      return Math.round(vol);
     }
 
     function recommendPackage(needKg, packs) {
@@ -631,47 +531,79 @@
       const matKey = document.getElementById('sel-material').value;
       const mat = MATERIALS[matKey] || MATERIALS.WHITE;
 
-      let moldWater = currentMode === 'water' 
-        ? Math.max(0, parseFloat(document.getElementById('inp-water').value) || 0)
-        : calcVolumeFromDimensions();
+      let totalWater = 0;
+      let totalPowder = 0;
+      let totalLiquid = 0;
 
-      let oneLiquid, onePowder, oneTotal;
-      if (mat.basis === 'powder') {
-        onePowder = moldWater * mat.x * mat.y;
-        oneLiquid = (moldWater * mat.x * mat.y) / mat.y;
-        oneTotal = onePowder + oneLiquid;
-      } else {
-        oneLiquid = moldWater * mat.x;
-        onePowder = moldWater * mat.x * mat.y;
-        oneTotal = oneLiquid + onePowder;
-      }
+      // חישוב מדויק עבור כל תבנית בנפרד
+      const calculatedMolds = molds.map((m, idx) => {
+        const w = Math.max(0, parseFloat(m.water) || 0);
+        totalWater += w;
 
-      const totalPowder = Math.round(onePowder * unitsCount);
-      const totalLiquid = Math.round(oneLiquid * unitsCount);
-      const totalMix = Math.round(oneTotal * unitsCount);
+        let oneLiquid, onePowder;
+        if (mat.basis === 'powder') {
+          onePowder = w * mat.x * mat.y;
+          oneLiquid = (w * mat.x * mat.y) / mat.y;
+        } else {
+          oneLiquid = w * mat.x;
+          onePowder = w * mat.x * mat.y;
+        }
 
-      const onePowderRound = Math.round(onePowder);
-      const oneLiquidRound = Math.round(oneLiquid);
-      const oneTotalRound = Math.round(oneTotal);
+        const pRound = Math.round(onePowder);
+        const lRound = Math.round(oneLiquid);
+        const tRound = pRound + lRound;
+
+        totalPowder += pRound;
+        totalLiquid += lRound;
+
+        return {
+          num: idx + 1,
+          water: Math.round(w),
+          powder: pRound,
+          liquid: lRound,
+          total: tRound
+        };
+      });
+
+      const totalMixAll = totalPowder + totalLiquid;
 
       // Header Badge
       document.getElementById('header-ratio-badge').innerText = `יחס ${mat.shortRatio}`;
 
       // Results Text
       document.getElementById('res-ratio-desc').innerText = `יחס רשמי: 1 חלק ${mat.liquid} ל-${mat.y} אבקה`;
-      document.getElementById('res-water-echo').innerText = `${moldWater} גרם מים בתבנית`;
+      document.getElementById('res-total-water-echo').innerText = `${totalWater} גרם מים סה"כ (${molds.length} תבניות)`;
 
-      // Single Mold
-      document.getElementById('res-total-one').innerText = `${oneTotalRound} גרם סה"כ לתבנית`;
-      document.getElementById('res-powder-one').innerText = `${onePowderRound} גרם`;
-      document.getElementById('res-liquid-one').innerText = `${oneLiquidRound} גרם`;
-      document.getElementById('lbl-liquid-one').innerText = mat.liquid;
+      // הצגת פירוט עבור כל תבנית
+      const resultsContainer = document.getElementById('molds-results-list');
+      if (resultsContainer) {
+        resultsContainer.innerHTML = calculatedMolds.map(m => `
+          <div class="apple-metric-box p-3 sm:p-3.5 space-y-2">
+            <div class="flex items-center justify-between text-xs sm:text-sm">
+              <span class="font-black text-white">תבנית ${m.num} (${m.water} גרם מים):</span>
+              <span class="font-rubik font-black text-teal-400">סה"כ: ${m.total} גרם</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2 text-right">
+              <div class="p-2 sm:p-2.5 rounded-xl bg-teal-950/60 border border-teal-800/60">
+                <span class="text-xs font-bold text-teal-300 block mb-0.5">אבקה</span>
+                <div class="text-lg sm:text-xl font-black text-teal-200 font-rubik">${m.powder} גרם</div>
+              </div>
 
-      // Total All
-      document.getElementById('res-total-all').innerText = `${totalMix} גרם (${(totalMix/1000).toFixed(2)} ק"ג)`;
-      document.getElementById('res-powder-all').innerText = `${totalPowder} גרם`;
-      document.getElementById('res-liquid-all').innerText = `${totalLiquid} גרם`;
-      document.getElementById('lbl-liquid-all').innerText = `סך כל ה${mat.liquid}`;
+              <div class="p-2 sm:p-2.5 rounded-xl bg-amber-950/60 border border-amber-800/60">
+                <span class="text-xs font-bold text-amber-300 block mb-0.5">${mat.liquid}</span>
+                <div class="text-lg sm:text-xl font-black text-amber-200 font-rubik">${m.liquid} גרם</div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // סך הכל לקערת הערבוב (לכל היציקה)
+      document.getElementById('res-total-all-mix').innerText = `${totalMixAll} גרם (${(totalMixAll/1000).toFixed(2)} ק"ג)`;
+      document.getElementById('res-total-powder').innerText = `${totalPowder} גרם`;
+      document.getElementById('res-total-liquid').innerText = `${totalLiquid} גרם`;
+      document.getElementById('lbl-total-liquid').innerText = `סך כל ה${mat.liquid}`;
 
       // Package recommendation
       const recBox = document.getElementById('box-recommendation');
@@ -682,7 +614,7 @@
             <span>📦 המלצת רכישה: ${rec.count} × אריזת ${rec.packSize} ק"ג</span>
             <span class="text-amber-400 font-rubik text-base">₪${rec.cost}</span>
           </div>
-          <span class="text-xs text-slate-400 block mt-1">מספק ${rec.cover} ק"ג סה"כ (דרוש: ${(totalPowder/1000).toFixed(2)} ק"ג).</span>
+          <span class="text-xs text-slate-400 block mt-1">מספק ${rec.cover} ק"ג סה"כ (דרוש: ${(totalPowder/1000).toFixed(2)} ק"ג אבקה).</span>
         `;
         recBox.classList.remove('hidden');
       } else {
@@ -704,30 +636,44 @@
     function copyRecipe() {
       const matKey = document.getElementById('sel-material').value;
       const mat = MATERIALS[matKey];
-      const moldWater = currentMode === 'water' ? document.getElementById('inp-water').value : calcVolumeFromDimensions();
-      const pOne = document.getElementById('res-powder-one').innerText;
-      const lOne = document.getElementById('res-liquid-one').innerText;
-      const tOne = document.getElementById('res-total-one').innerText;
-      const tAll = document.getElementById('res-total-all').innerText;
+      const totPowder = document.getElementById('res-total-powder').innerText;
+      const totLiquid = document.getElementById('res-total-liquid').innerText;
+      const totMix = document.getElementById('res-total-all-mix').innerText;
+
+      let moldsText = molds.map((m, idx) => {
+        const w = Math.max(0, parseFloat(m.water) || 0);
+        let p, l;
+        if (mat.basis === 'powder') {
+          p = Math.round(w * mat.x * mat.y);
+          l = Math.round((w * mat.x * mat.y) / mat.y);
+        } else {
+          l = Math.round(w * mat.x);
+          p = Math.round(w * mat.x * mat.y);
+        }
+        return `• תבנית ${idx + 1} (${w}ג' מים): ${p}ג' אבקה | ${l}ג' ${mat.liquid} | סה"כ ${p + l}ג'`;
+      }).join('\n');
 
       const text = `מתכון גרייש (Grayish) ליציקה מושלמת:
 חומר: ${mat.label}
 יחס: 1 ${mat.liquid} ל-${mat.y} אבקה
-מים בתבנית: ${moldWater} גרם (סמ"ק)
+מספר תבניות: ${molds.length}
 
-לשקילת תבנית אחת:
-• אבקה: ${pOne}
-• ${mat.liquid}: ${lOne}
-• סה"כ: ${tOne}
+פירוט לכל תבנית:
+${moldsText}
 
-סך הכל עבור ${unitsCount} תבניות: ${tAll}`;
+═══════════════════════════════
+סה"כ להכנה בקערת הערבוב:
+• סך הכל ${mat.liquid}: ${totLiquid}
+• סך הכל אבקה: ${totPowder}
+• סך הכל תערובת: ${totMix}`;
 
       navigator.clipboard?.writeText(text).then(() => {
-        alert('המתכון הועתק בהצלחה ללוח!');
+        alert('מתכון השקילה המלא הועתק בהצלחה ללוח!');
       });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      renderMoldsInputs();
       runCalc();
     });
   </script>
