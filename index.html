@@ -440,6 +440,18 @@
     <!-- קטגוריה 2: תבניות שמורות (ניהול תבניות, הוספה, וחישוב אוטומטי) -->
     <!-- ═════════════════════════════════════════════════════════════ -->
     <section id="view-saved" class="hidden space-y-4">
+
+      <!-- סרגל סטטוס סנכרון GitHub -->
+      <div class="liquid-glass p-3 sm:p-4 flex items-center justify-between text-xs">
+        <div class="flex items-center gap-2">
+          <span id="gh-sync-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          <span id="gh-sync-status" class="text-slate-300 font-bold">סנכרון GitHub: molds.json</span>
+        </div>
+        <button type="button" onclick="openGitHubSettingsModal()" class="text-xs text-teal-300 hover:text-white font-bold flex items-center gap-1.5 bg-teal-500/10 hover:bg-teal-500/20 px-2.5 py-1.5 rounded-xl border border-teal-400/30 transition active:scale-95">
+          <i data-lucide="git-branch" class="w-3.5 h-3.5"></i>
+          <span id="btn-gh-settings-text">הגדרות GitHub</span>
+        </button>
+      </div>
       
       <!-- טופס הוספת תבנית או סט תבניות לשמורים -->
       <div class="liquid-glass p-5 sm:p-7 space-y-4">
@@ -564,6 +576,47 @@
       </div>
     </div>
 
+    <!-- מודאל הגדרת טוקן GitHub לעריכה ושמירה בענן -->
+    <div id="modal-github-token" class="fixed inset-0 z-50 flex items-center justify-center p-4 liquid-modal-backdrop hidden">
+      <div class="liquid-glass w-full max-w-md p-5 sm:p-6 space-y-4 shadow-2xl relative">
+        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+          <div class="flex items-center gap-2 text-white font-black text-base sm:text-lg">
+            <i data-lucide="github" class="w-5 h-5 text-teal-400"></i>
+            <span>סנכרון תבניות עם GitHub</span>
+          </div>
+          <button type="button" onclick="closeGitHubSettingsModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center">
+            ✕
+          </button>
+        </div>
+
+        <p class="text-xs text-slate-300 leading-relaxed">
+          כל התבניות והסטים שלך שמורים ישירות בקובץ <code class="text-teal-300 font-mono bg-teal-500/10 px-1 py-0.5 rounded border border-teal-400/20">molds.json</code> בריפו שלך ב-GitHub.
+          <br><br>
+          האתר קורא את התבניות מ-GitHub אוטומטית בכל מכשיר. כדי להוסיף או למחוק תבניות ישירות ל-GitHub, הדבק כאן את הטוקן שלך (Personal Access Token):
+        </p>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-slate-200">
+            GitHub Personal Access Token:
+          </label>
+          <input type="password" id="input-gh-pat" placeholder="הדבק ghp_..." class="liquid-input w-full p-3 text-xs sm:text-sm font-mono text-teal-200" dir="ltr">
+          <span class="text-[11px] text-slate-400 block">הטוקן נשמר אך ורק במכשיר זה (LocalStorage) ולעולם לא נחשף.</span>
+        </div>
+
+        <div id="gh-token-feedback" class="text-xs font-bold hidden p-2.5 rounded-xl border"></div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <button type="button" onclick="saveGitHubPatFromInput()" class="liquid-btn-primary flex-1 py-3 font-black text-xs sm:text-sm flex items-center justify-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>שמור ובדוק חיבור</span>
+          </button>
+          <button type="button" onclick="closeGitHubSettingsModal()" class="py-3 px-4 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs hover:bg-slate-700">
+            ביטול
+          </button>
+        </div>
+      </div>
+    </div>
+
     <footer class="text-center text-xs text-slate-500 py-3">
       <p>מחשבון גרייש Pro Max • קטגוריות ותבניות שמורות • grayish.co.il</p>
     </footer>
@@ -617,7 +670,243 @@
       };
     }
 
-    // מאגר תבניות שמורות (נטען מ-localStorage - רק מה שהמשתמש שומר, ללא תבניות מובנות)
+    // ─── סנכרון GitHub עבור molds.json ───
+
+    const GH_OWNER = 'maori30';
+    const GH_REPO = 'polymer-concrete-calculator';
+    const GH_FILE_PATH = 'molds.json';
+    let currentMoldsSha = null;
+
+    function getGitHubToken() {
+      return (localStorage.getItem('grayish_gh_pat') || '').trim();
+    }
+
+    function setGitHubToken(token) {
+      if (token) {
+        localStorage.setItem('grayish_gh_pat', token.trim());
+      } else {
+        localStorage.removeItem('grayish_gh_pat');
+      }
+      updateGitHubStatusUI();
+    }
+
+    function updateGitHubStatusUI(customMsg, isError) {
+      const token = getGitHubToken();
+      const statusEl = document.getElementById('gh-sync-status');
+      const dotEl = document.getElementById('gh-sync-dot');
+      const btnText = document.getElementById('btn-gh-settings-text');
+      
+      if (statusEl) {
+        if (customMsg) {
+          statusEl.innerText = customMsg;
+        } else if (token) {
+          statusEl.innerText = 'מחובר ל-GitHub: molds.json';
+        } else {
+          statusEl.innerText = 'קריאה מ-GitHub: molds.json (הזן טוקן לשמירה)';
+        }
+      }
+
+      if (dotEl) {
+        if (isError) {
+          dotEl.className = 'w-2.5 h-2.5 rounded-full bg-rose-400';
+        } else if (token) {
+          dotEl.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400';
+        } else {
+          dotEl.className = 'w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse';
+        }
+      }
+
+      if (btnText) {
+        btnText.innerText = token ? 'מחובר (maori30)' : 'הגדר טוקן';
+      }
+    }
+
+    function openGitHubSettingsModal() {
+      const modal = document.getElementById('modal-github-token');
+      const input = document.getElementById('input-gh-pat');
+      const feedback = document.getElementById('gh-token-feedback');
+      if (feedback) feedback.classList.add('hidden');
+      if (input) input.value = getGitHubToken();
+      if (modal) modal.classList.remove('hidden');
+      safeCreateIcons();
+    }
+
+    function closeGitHubSettingsModal() {
+      const modal = document.getElementById('modal-github-token');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function saveGitHubPatFromInput() {
+      const input = document.getElementById('input-gh-pat');
+      const feedback = document.getElementById('gh-token-feedback');
+      const token = input.value.trim();
+
+      if (!token) {
+        setGitHubToken('');
+        alert('הטוקן הוסר מהמכשיר.');
+        closeGitHubSettingsModal();
+        return;
+      }
+
+      if (feedback) {
+        feedback.className = 'text-xs font-bold text-amber-300 block bg-amber-500/10 border border-amber-400/20';
+        feedback.innerText = 'בודק חיבור מול GitHub...';
+        feedback.classList.remove('hidden');
+      }
+
+      try {
+        const res = await fetch('https://api.github.com/user', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github+json'
+          }
+        });
+
+        if (res.ok) {
+          const user = await res.json();
+          setGitHubToken(token);
+          if (feedback) {
+            feedback.className = 'text-xs font-bold text-emerald-300 block bg-emerald-500/10 border border-emerald-400/20';
+            feedback.innerText = `חיבור הצליח! מחובר כ-${user.login}`;
+          }
+          setTimeout(() => {
+            closeGitHubSettingsModal();
+            syncMoldsFromGitHub();
+          }, 800);
+        } else {
+          if (feedback) {
+            feedback.className = 'text-xs font-bold text-rose-300 block bg-rose-500/10 border border-rose-400/20';
+            feedback.innerText = 'הטוקן לא תקין או שאין לו הרשאות ל-repo.';
+          }
+        }
+      } catch (err) {
+        if (feedback) {
+          feedback.className = 'text-xs font-bold text-rose-300 block bg-rose-500/10 border border-rose-400/20';
+          feedback.innerText = 'שגיאת רשת בבדיקת הטוקן: ' + err.message;
+        }
+      }
+    }
+
+    function utf8ToBase64(str) {
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+        return String.fromCharCode('0x' + p1);
+      }));
+    }
+
+    function base64ToUtf8(str) {
+      return decodeURIComponent(Array.prototype.map.call(atob(str.replace(/\s/g, '')), function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+    }
+
+    // טעינת תבניות שמורות ישירות מקובץ molds.json ב-GitHub
+    async function syncMoldsFromGitHub() {
+      const token = getGitHubToken();
+      updateGitHubStatusUI();
+
+      try {
+        const headers = {
+          'Accept': 'application/vnd.github+json'
+        };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE_PATH}?ref=main&_t=${Date.now()}`;
+        const res = await fetch(url, { headers });
+
+        if (res.ok) {
+          const data = await res.json();
+          currentMoldsSha = data.sha;
+          if (data.content) {
+            const jsonText = base64ToUtf8(data.content);
+            const parsed = JSON.parse(jsonText);
+            if (Array.isArray(parsed)) {
+              savedMolds = parsed.map(normalizeSavedMold);
+              persistSavedMoldsLocalOnly();
+              renderSavedMoldsList();
+              updateSavedCounts();
+              updateGitHubStatusUI('סנכרון GitHub: molds.json (מעודכן)');
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('GitHub sync read error (using local cache):', err);
+      }
+    }
+
+    function persistSavedMoldsLocalOnly() {
+      try {
+        localStorage.setItem('grayish_saved_molds_v2', JSON.stringify(savedMolds));
+      } catch (e) {
+        console.warn('Storage write error', e);
+      }
+      updateSavedCounts();
+    }
+
+    // שמירת רשימת התבניות ישירות לקובץ molds.json ב-GitHub
+    async function commitMoldsToGitHub(newMoldsList) {
+      const token = getGitHubToken();
+      if (!token) {
+        openGitHubSettingsModal();
+        alert('כדי לשמור ישירות ל-GitHub, אנא הדבק תחילה את הטוקן שלך בחלונית שנפתחה.');
+        return false;
+      }
+
+      updateGitHubStatusUI('שומר ומבצע Commit ל-GitHub... ⏳');
+
+      try {
+        const checkRes = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE_PATH}?ref=main&_t=${Date.now()}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github+json'
+          }
+        });
+        if (checkRes.ok) {
+          const checkData = await checkRes.json();
+          currentMoldsSha = checkData.sha;
+        }
+
+        const jsonString = JSON.stringify(newMoldsList, null, 2);
+        const base64Content = utf8ToBase64(jsonString);
+
+        const bodyData = {
+          message: 'Update molds.json from Grayish Pro Max [skip ci]',
+          content: base64Content
+        };
+        if (currentMoldsSha) bodyData.sha = currentMoldsSha;
+
+        const putRes = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE_PATH}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(bodyData)
+        });
+
+        if (putRes.ok) {
+          const putData = await putRes.json();
+          currentMoldsSha = putData.content?.sha;
+          savedMolds = newMoldsList;
+          persistSavedMoldsLocalOnly();
+          renderSavedMoldsList();
+          updateGitHubStatusUI('נשמר בהצלחה ב-GitHub!');
+          setTimeout(() => updateGitHubStatusUI(), 3000);
+          return true;
+        } else {
+          const errData = await putRes.json();
+          alert('שגיאה בשמירה ל-GitHub: ' + (errData.message || putRes.statusText));
+          updateGitHubStatusUI('שגיאה בשמירה ל-GitHub', true);
+          return false;
+        }
+      } catch (err) {
+        alert('שגיאת תקשורת עם GitHub: ' + err.message);
+        updateGitHubStatusUI('שגיאת תקשורת עם GitHub', true);
+        return false;
+      }
+    }
+
+    // מאגר תבניות שמורות (נטען מ-localStorage / מסונכרן עם GitHub)
     let savedMolds = loadSavedMolds();
 
     function loadSavedMolds() {
@@ -626,7 +915,6 @@
         if (stored) {
           const parsed = JSON.parse(stored);
           if (Array.isArray(parsed)) {
-            // סינון של כל תבנית מובנית/דוגמה קודמת כדי שיופיעו אך ורק תבניות שהמשתמש שמר
             const userOnly = parsed.filter(m => m && !String(m.id).startsWith('def_'));
             return userOnly.map(normalizeSavedMold);
           }
@@ -635,15 +923,6 @@
         console.warn('Storage read error', e);
       }
       return [];
-    }
-
-    function persistSavedMolds() {
-      try {
-        localStorage.setItem('grayish_saved_molds_v2', JSON.stringify(savedMolds));
-      } catch (e) {
-        console.warn('Storage write error', e);
-      }
-      updateSavedCounts();
     }
 
     function updateSavedCounts() {
@@ -866,7 +1145,7 @@
       }
     }
 
-    function saveNewMold() {
+    async function saveNewMold() {
       const nameInput = document.getElementById('new-mold-desc');
       const matSelect = document.getElementById('new-mold-mat');
 
@@ -898,23 +1177,25 @@
         items: validItems
       };
 
-      savedMolds.unshift(newMold);
-      persistSavedMolds();
-      renderSavedMoldsList();
+      const updatedList = [newMold, ...savedMolds];
+      const ok = await commitMoldsToGitHub(updatedList);
+      if (!ok) return;
 
       nameInput.value = '';
       newMoldParts = [{ name: 'תבנית ראשית', water: '' }];
       renderNewMoldPartsInputs();
       updateNewMoldPreview();
 
-      alert(`התבנית / הסט "${name}" נשמר בהצלחה באתר!`);
+      alert(`התבנית / הסט "${name}" נשמר בהצלחה ב-GitHub! 🎉`);
     }
 
-    function deleteSavedMold(id) {
-      if (!confirm('האם אתה בטוח שברצונך למחוק תבנית שמורה זו?')) return;
-      savedMolds = savedMolds.filter(m => m.id !== id);
-      persistSavedMolds();
-      renderSavedMoldsList();
+    async function deleteSavedMold(id) {
+      if (!confirm('האם אתה בטוח שברצונך למחוק תבנית שמורה זו מ-GitHub?')) return;
+      const updatedList = savedMolds.filter(m => m.id !== id);
+      const ok = await commitMoldsToGitHub(updatedList);
+      if (ok) {
+        alert('התבנית נמחקה בהצלחה מ-GitHub.');
+      }
     }
 
     function renderSavedMoldsList() {
@@ -1318,12 +1599,14 @@ ${moldsText}
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      persistSavedMolds();
+      persistSavedMoldsLocalOnly();
       updateSavedCounts();
+      updateGitHubStatusUI();
       renderMoldsInputs();
       renderNewMoldPartsInputs();
       updateNewMoldPreview();
       runCalc();
+      syncMoldsFromGitHub();
     });
   </script>
 </body>
