@@ -225,15 +225,15 @@
           1. בחירת חומר של גרייש:
         </label>
         <div class="relative">
-          <select id="sel-material" onchange="runCalc()" class="apple-input apple-select w-full p-4 rounded-2xl text-white font-bold text-base sm:text-lg cursor-pointer">
-            <option value="WHITE" selected>שלג פולימרי פרו (Snow Pro) — יחס 3:1 (הנפוץ ביותר)</option>
-            <option value="SNOW100">שלג 100% לבן (Pure White) — יחס 3.2:1 (לבן בוהק)</option>
-            <option value="GYSMO">GYSMO PRO (גיסמו פרו) — יחס 3.3:1 (מהיר וחזק)</option>
-            <option value="FLEX">GYSMO FLEX (גיסמו פלקס) — יחס 3.5:1 (גמיש ועמיד לשבירה)</option>
-            <option value="SAHARA">בטון פולימרי סהרה (Sahara) — יחס 3.5:1 (אפקט אבן)</option>
-            <option value="YELLOW">בטון אבן ירושלמית — יחס 3.8:1 (טבעי אותנטי)</option>
-            <option value="MIRAGE">בטון מיראז׳ אבן אפריקאית — יחס 3.5:1 (בזלת וגרניט)</option>
-            <option value="KAMIN">שלג אבקת קמין — יחס 3:1 (עמיד בחום ונרות)</option>
+          <select id="sel-material" onchange="runCalc()" class="apple-input apple-select w-full p-4 rounded-2xl text-white font-bold text-sm sm:text-base cursor-pointer">
+            <option value="WHITE" selected>שלג פולימרי פרו (Snow Pro) — יחס 3:1</option>
+            <option value="SNOW100">שלג 100% לבן (Pure White) — יחס 3.2:1</option>
+            <option value="GYSMO">GYSMO PRO (גיסמו פרו) — יחס 3.3:1</option>
+            <option value="FLEX">GYSMO FLEX (גיסמו פלקס) — יחס 3.5:1</option>
+            <option value="SAHARA">בטון פולימרי סהרה (Sahara) — יחס 3.5:1</option>
+            <option value="YELLOW">בטון אבן ירושלמית — יחס 3.8:1</option>
+            <option value="MIRAGE">בטון מיראז׳ (אבן כהה) — יחס 3.5:1</option>
+            <option value="KAMIN">שלג אבקת קמין — יחס 3:1</option>
             <option value="NIKA">NIKA A1 (דו-רכיבי נוזל+אבקה) — יחס 2.6:1</option>
           </select>
         </div>
@@ -258,25 +258,13 @@
           </div>
         </div>
 
-        <!-- Mode Water Input -->
+        <!-- Mode Water Input (Full Width - No Steppers to Avoid Truncation) -->
         <div id="mode-water-box" class="space-y-3">
-          <div class="flex items-center gap-2">
-            
-            <div class="relative flex-1">
-              <input type="number" id="inp-water" value="265" min="1" max="10000" oninput="runCalc()" class="apple-input w-full px-4 py-3.5 text-3xl sm:text-4xl font-black font-rubik text-teal-300 text-left pl-28" dir="ltr">
-              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm sm:text-base font-bold text-slate-400 pointer-events-none">
-                גרם מים
-              </span>
-            </div>
-
-            <!-- iPhone Stepper Buttons -->
-            <div class="flex items-center gap-1 bg-slate-800/90 p-1.5 rounded-2xl border border-slate-700 flex-shrink-0">
-              <button type="button" onclick="stepWater(-50)" class="apple-btn-step px-2.5 py-2.5 text-sm sm:text-base" title="הורד 50 גרם">-50</button>
-              <button type="button" onclick="stepWater(-10)" class="apple-btn-step px-2.5 py-2.5 text-sm sm:text-base" title="הורד 10 גרם">-10</button>
-              <button type="button" onclick="stepWater(10)" class="apple-btn-step px-2.5 py-2.5 text-sm sm:text-base text-teal-300" title="הוסף 10 גרם">+10</button>
-              <button type="button" onclick="stepWater(50)" class="apple-btn-step px-2.5 py-2.5 text-sm sm:text-base text-teal-300" title="הוסף 50 גרם">+50</button>
-            </div>
-
+          <div class="relative w-full">
+            <input type="number" id="inp-water" value="265" min="1" max="10000" oninput="runCalc()" class="apple-input w-full px-5 py-4 text-3xl sm:text-4xl font-black font-rubik text-teal-300 text-left pl-28 sm:pl-32" dir="ltr">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-sm sm:text-base font-bold text-slate-400 pointer-events-none">
+              גרם מים
+            </span>
           </div>
 
           <!-- Grayish Tip -->
